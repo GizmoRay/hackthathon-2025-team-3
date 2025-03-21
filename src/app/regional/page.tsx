@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
 import Title from "@/components/Title/Title";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 interface RegionalResponse {
 	convertedText: string;
@@ -88,6 +89,23 @@ export default function RegionalExperience() {
 		convertText();
 	};
 
+	// Calculate stats from the result
+	const getStats = () => {
+		if (!result) return null;
+
+		const wordCount = result.convertedText.trim().split(/\s+/).length;
+		const changedWords = result.changes.length;
+		const changePercentage = ((changedWords / wordCount) * 100).toFixed(1);
+
+		return {
+			wordCount,
+			changedWords,
+			changePercentage,
+		};
+	};
+
+	const stats = getStats();
+
 	return (
 		<div className={styles.container}>
 			<Title
@@ -96,6 +114,34 @@ export default function RegionalExperience() {
 			/>
 
 			<div className={styles.editorGrid}>
+				<Sidebar type="stats">
+					<div className={styles.readabilityStats}>
+						<h3>Conversion Stats</h3>
+						{stats ? (
+							<>
+								<div className={styles.statItem}>
+									<span className={styles.label}>Total Words:</span>
+									<span className={styles.value}>{stats.wordCount}</span>
+								</div>
+								<div className={styles.statItem}>
+									<span className={styles.label}>Words Changed:</span>
+									<span className={styles.value}>{stats.changedWords}</span>
+								</div>
+								<div className={styles.statItem}>
+									<span className={styles.label}>Change Rate:</span>
+									<span className={styles.value}>
+										{stats.changePercentage}%
+									</span>
+								</div>
+							</>
+						) : (
+							<div className={styles.placeholder}>
+								Enter text to see conversion statistics
+							</div>
+						)}
+					</div>
+				</Sidebar>
+
 				<div className={styles.sourceSection}>
 					<h3>US English</h3>
 					<form onSubmit={handleSubmit}>
