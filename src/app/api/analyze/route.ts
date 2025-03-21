@@ -59,7 +59,7 @@ export async function POST(request: Request) {
 
 		let attempts = 0;
 		const maxAttempts = 10;
-		const delay = 2000;
+		const delay = 5000;
 
 		while (attempts < maxAttempts) {
 			const resultsResponse = await fetch(
