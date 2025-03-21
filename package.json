@@ -1,6 +1,6 @@
 {
 	"name": "sn-copy-ai-tool",
-	"version": "0.1.2",
+	"version": "0.0.3",
 	"private": true,
 	"scripts": {
 		"dev": "next dev --turbopack",
