@@ -12,8 +12,11 @@
 
 .toolButton {
 	padding: 0.75rem 1.5rem;
-	border: 1px solid #e5e5e5;
-	border-radius: 30px;
+	background: linear-gradient(white, white) padding-box,
+		linear-gradient(90deg, #62d84e 0%, #24c2ce 80%) border-box;
+	border-radius: 50em;
+	border: 1px solid transparent;
+
 	text-decoration: none;
 	color: #666;
 	font-size: 0.875rem;
@@ -29,6 +32,10 @@
 	background-color: #000;
 	border-color: #000;
 	color: #fff;
+
+	border-radius: 321.429px;
+	border: 1px solid #62d84e;
+	background: linear-gradient(90deg, #62d84e 0%, #24c2ce 80%);
 }
 
 .beta {
