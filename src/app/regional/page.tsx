@@ -109,80 +109,80 @@ export default function RegionalExperience() {
 
 	return (
 		<div className={styles.container}>
-			<Title
-				title="Regional Experience - BETA"
-				description="Make your content work for our geo teams. Input text to get a side-by-side comparison of your copy with local nuances."
-			/>
-
-			<div className={styles.editorGrid}>
-				<Sidebar type="stats">
-					<div className={styles.readabilityStats}>
-						<h3>Conversion Results</h3>
-						{stats ? (
-							<>
-								<div className={styles.statItem}>
-									<span className={styles.label}>Total Words:</span>
-									<span className={styles.value}>{stats.wordCount}</span>
-								</div>
-								<div className={styles.statItem}>
-									<span className={styles.label}>Words Changed:</span>
-									<span className={styles.value}>{stats.changedWords}</span>
-								</div>
-								<div className={styles.statItem}>
-									<span className={styles.label}>Change Rate:</span>
-									<span className={styles.value}>
-										{stats.changePercentage}%
-									</span>
-								</div>
-							</>
-						) : (
-							<div className={styles.placeholder}>
-								<Skeleton length={120} />
+			<Sidebar type="stats">
+				<div className={styles.readabilityStats}>
+					<h3>Conversion Results</h3>
+					{stats ? (
+						<>
+							<div className={styles.statItem}>
+								<span className={styles.label}>Total Words:</span>
+								<span className={styles.value}>{stats.wordCount}</span>
 							</div>
-						)}
-					</div>
-				</Sidebar>
-
-				<div className={styles.sourceSection}>
-					<h3>US English</h3>
-					<form onSubmit={handleSubmit}>
-						<div className={styles.textareaWrapper}>
-							<textarea
-								value={sourceText}
-								onChange={(e) => setSourceText(e.target.value)}
-								placeholder="Enter your US English text here..."
-								className={styles.textInput}
-								onKeyDown={(e) => {
-									if (e.key === "Enter" && !e.shiftKey) {
-										e.preventDefault();
-										handleSubmit(e);
-									}
-								}}
-							/>
-							<div
-								className={`${styles.spinner} ${
-									isConverting ? styles.visible : ""
-								}`}
-							/>
+							<div className={styles.statItem}>
+								<span className={styles.label}>Words Changed:</span>
+								<span className={styles.value}>{stats.changedWords}</span>
+							</div>
+							<div className={styles.statItem}>
+								<span className={styles.label}>Change Rate:</span>
+								<span className={styles.value}>{stats.changePercentage}%</span>
+							</div>
+						</>
+					) : (
+						<div className={styles.placeholder}>
+							<Skeleton length={120} />
 						</div>
-					</form>
+					)}
 				</div>
+			</Sidebar>
 
-				<div className={styles.resultSection}>
-					<h3>UK English</h3>
-					<div className={styles.resultText}>
-						{result ? (
-							<div className={styles.highlightedText}>
-								<HighlightedText
-									text={result.convertedText}
-									changes={result.changes}
+			<div className={styles.mainColumn}>
+				<Title
+					title="Regional Experience - BETA"
+					description="Make your content work for our geo teams. Input text to get a side-by-side comparison of your copy with local nuances."
+				/>
+
+				<div className={styles.editorContainer}>
+					<div className={styles.sourceSection}>
+						<h3>US English</h3>
+						<form onSubmit={handleSubmit}>
+							<div className={styles.textareaWrapper}>
+								<textarea
+									value={sourceText}
+									onChange={(e) => setSourceText(e.target.value)}
+									placeholder="Enter your US English text here..."
+									className={styles.textInput}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" && !e.shiftKey) {
+											e.preventDefault();
+											handleSubmit(e);
+										}
+									}}
+								/>
+								<div
+									className={`${styles.spinner} ${
+										isConverting ? styles.visible : ""
+									}`}
 								/>
 							</div>
-						) : (
-							<div className={styles.placeholder}>
-								Converted text will appear here...
-							</div>
-						)}
+						</form>
+					</div>
+
+					<div className={styles.resultSection}>
+						<h3>UK English</h3>
+						<div className={styles.resultText}>
+							{result ? (
+								<div className={styles.highlightedText}>
+									<HighlightedText
+										text={result.convertedText}
+										changes={result.changes}
+									/>
+								</div>
+							) : (
+								<div className={styles.placeholder}>
+									Converted text will appear here...
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>

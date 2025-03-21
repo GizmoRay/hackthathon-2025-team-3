@@ -1,8 +1,23 @@
 .container {
+	display: grid;
+	grid-template-columns: 250px 1fr;
+	gap: 2rem;
 	padding: 2rem;
 	max-width: 1400px;
 	margin: 0 auto;
 	background: white;
+}
+
+.mainColumn {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+}
+
+.editorContainer {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 2rem;
 }
 
 .editorGrid {
