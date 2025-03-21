@@ -6,7 +6,8 @@ import styles from "./styles.module.css";
 interface Feedback {
 	readability: {
 		score: string;
-		details?: string;
+		status: "good" | "needs-improvement" | "bad";
+		details: string;
 	};
 	grammar: {
 		issues: string[];
@@ -31,50 +32,22 @@ export default function CopyAnalyzer() {
 		setIsAnalyzing(true);
 
 		try {
-			const options = {
+			const response = await fetch("/api/analyze", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-					"x-copy-ai-api-key": process.env.NEXT_PUBLIC_COPY_AI_API_KEY || "",
 				},
-				body: JSON.stringify({
-					startVariables: { copy: text },
-					metadata: { api: true },
-				}),
-			};
-
-			const response = await fetch(
-				"https://api.copy.ai/api/workflow/WCFG-c611eac4-35bd-405b-8887-93a2450a4d8e/run",
-				options
-			);
+				body: JSON.stringify({ text }),
+			});
 
 			if (!response.ok) {
 				throw new Error("Failed to analyze copy");
 			}
 
 			const data = await response.json();
-
-			// Assuming the API response matches our Feedback interface
-			// You might need to transform the data to match the interface
-			setFeedback({
-				readability: {
-					score: data.readabilityScore || "Good",
-					details: data.readabilityDetails,
-				},
-				grammar: {
-					issues: data.grammarIssues || [],
-				},
-				legal: {
-					issues: data.legalIssues || [],
-				},
-				brandVoice: {
-					issues: data.brandIssues || [],
-				},
-				characterCount: text.length,
-			});
+			setFeedback(data);
 		} catch (error) {
 			console.error("Error analyzing copy:", error);
-			// You might want to show an error message to the user
 		} finally {
 			setIsAnalyzing(false);
 		}
@@ -82,17 +55,54 @@ export default function CopyAnalyzer() {
 
 	return (
 		<div className={styles.analyzerContainer}>
-			<div className={styles.inputSection}>
-				<h2>Readability</h2>
+			<div className={styles.statsColumn}>
+				<div className={styles.readabilityStats}>
+					<h2>Readability</h2>
+					{feedback && (
+						<div
+							className={`${styles.score} ${
+								styles[feedback.readability.status]
+							}`}
+						>
+							{feedback.readability.status === "good"
+								? "Good."
+								: "Needs improvement."}
+						</div>
+					)}
+				</div>
+
+				<div className={styles.characterStats}>
+					<h3>Characters</h3>
+					<div>{text.length} characters including spaces</div>
+				</div>
+
+				{feedback && (
+					<>
+						<div className={`${styles.statItem} ${styles.grammarStats}`}>
+							<h3>Grammar and spelling</h3>
+							<div>{feedback.grammar.issues.length} items found</div>
+						</div>
+
+						<div className={`${styles.statItem} ${styles.legalStats}`}>
+							<h3>Legal</h3>
+							<div>{feedback.legal.issues.length} items found</div>
+						</div>
+
+						<div className={`${styles.statItem} ${styles.brandStats}`}>
+							<h3>Brand Voice and Tone</h3>
+							<div>{feedback.brandVoice.issues.length} items found</div>
+						</div>
+					</>
+				)}
+			</div>
+
+			<div className={styles.mainContent}>
 				<textarea
 					value={text}
 					onChange={(e) => setText(e.target.value)}
 					placeholder="Paste your copy here..."
 					className={styles.textInput}
 				/>
-				<div className={styles.characterCount}>
-					Characters: {text.length} including spaces
-				</div>
 				<button
 					onClick={analyzeCopy}
 					className={styles.analyzeButton}
@@ -103,16 +113,8 @@ export default function CopyAnalyzer() {
 			</div>
 
 			{feedback && (
-				<div className={styles.feedbackSection}>
-					<div className={styles.readabilityScore}>
-						<h2>Readability</h2>
-						<div className={styles.score}>{feedback.readability.score}</div>
-						{feedback.readability.details && (
-							<p>{feedback.readability.details}</p>
-						)}
-					</div>
-
-					<div className={`${styles.feedbackCategory} ${styles.grammar}`}>
+				<div className={styles.recommendationsColumn}>
+					<div className={`${styles.grammarSection} ${styles.statItem}`}>
 						<h2>Grammar suggestion:</h2>
 						<ul>
 							{feedback.grammar.issues.map((issue, index) => (
@@ -121,7 +123,7 @@ export default function CopyAnalyzer() {
 						</ul>
 					</div>
 
-					<div className={`${styles.feedbackCategory} ${styles.legal}`}>
+					<div className={`${styles.legalSection} ${styles.statItem}`}>
 						<h2>Legal suggestion:</h2>
 						<ul>
 							{feedback.legal.issues.map((issue, index) => (
@@ -130,7 +132,7 @@ export default function CopyAnalyzer() {
 						</ul>
 					</div>
 
-					<div className={`${styles.feedbackCategory} ${styles.brand}`}>
+					<div className={`${styles.brandSection} ${styles.statItem}`}>
 						<h2>Brand Voice and Tone:</h2>
 						<ul>
 							{feedback.brandVoice.issues.map((issue, index) => (

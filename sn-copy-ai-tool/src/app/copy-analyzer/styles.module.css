@@ -1,6 +1,6 @@
 .analyzerContainer {
 	display: grid;
-	grid-template-columns: 350px 1fr;
+	grid-template-columns: 250px 1fr 400px;
 	gap: 2rem;
 	padding: 2rem;
 	max-width: 1400px;
@@ -9,32 +9,56 @@
 	background: white;
 }
 
-.inputSection {
+.statsColumn {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.readabilityStats h2 {
+	font-size: 1.2rem;
+	font-weight: 500;
+	margin: 0;
+}
+
+.score {
+	font-size: 1.5rem;
+	margin-top: 0.5rem;
+}
+
+.characterStats {
+	background-color: #e8f5e9;
+	padding: 1rem;
+	border-radius: 8px;
+}
+
+.statItem {
+	padding: 1rem;
+	border-radius: 8px;
+}
+
+.statItem h3,
+.characterStats h3 {
+	font-size: 1rem;
+	font-weight: 500;
+	margin: 0 0 0.5rem 0;
+}
+
+.mainContent {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	background: #f8f9fa;
-	padding: 1.5rem;
-	border-radius: 8px;
-	height: fit-content;
 }
 
 .textInput {
-	width: 100%;
-	height: 200px;
+	flex: 1;
+	min-height: 300px;
 	padding: 1rem;
 	border: 1px solid #e0e0e0;
 	border-radius: 8px;
 	font-size: 16px;
 	resize: none;
-	background: white;
-}
-
-.characterCount {
-	background-color: #e8f5e9;
-	padding: 0.75rem;
-	border-radius: 6px;
-	font-size: 14px;
+	font-family: monospace;
 }
 
 .analyzeButton {
@@ -45,75 +69,44 @@
 	border-radius: 6px;
 	cursor: pointer;
 	font-size: 16px;
+	align-self: flex-end;
 }
 
-.analyzeButton:hover {
-	background-color: #1976d2;
-}
-
-.analyzeButton:disabled {
-	background-color: #ccc;
-	cursor: not-allowed;
-}
-
-.feedbackSection {
+.recommendationsColumn {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
 }
 
-.readabilityScore {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
+.grammarSection,
+.grammarStats {
+	background-color: #ffebee;
 }
 
-.readabilityScore h2 {
+.legalSection,
+.legalStats {
+	background-color: #fff8e1;
+}
+
+.brandSection,
+.brandStats {
+	background-color: #e0f7fa;
+}
+
+.recommendationsColumn h2 {
 	font-size: 1.2rem;
 	font-weight: 500;
-	margin: 0;
+	margin: 0 0 1rem 0;
 }
 
-.score {
-	color: #4caf50;
-	font-size: 1.5rem;
-	font-weight: 500;
-}
-
-.feedbackCategory {
-	padding: 1rem;
-	border-radius: 8px;
-	margin-bottom: 1rem;
-}
-
-.feedbackCategory h2 {
-	font-size: 1rem;
-	font-weight: 500;
-	margin: 0 0 0.5rem 0;
-}
-
-.feedbackCategory ul {
+.recommendationsColumn ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
 
-.feedbackCategory li {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
+.recommendationsColumn li {
+	margin: 0.75rem 0;
 	color: #2196f3;
-	text-decoration: underline;
-}
-
-.grammar {
-	background-color: #fff1f0;
-}
-
-.legal {
-	background-color: #fffbe6;
-}
-
-.brand {
-	background-color: #e6fffb;
+	line-height: 1.5;
 }
