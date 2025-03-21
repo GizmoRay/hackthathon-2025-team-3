@@ -58,7 +58,13 @@
 .placeholder {
 	color: #666;
 	font-size: 0.875rem;
-	font-style: italic;
+}
+
+.skeleton {
+	background-color: #e0e0e0;
+	border-radius: 30px;
+	width: 100px;
+	height: 16px;
 }
 
 .spinner {

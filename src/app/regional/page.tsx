@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./styles.module.css";
 import Title from "@/components/Title/Title";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import Skeleton from "@/components/Skeleton/Skeleton";
 
 interface RegionalResponse {
 	convertedText: string;
@@ -109,14 +110,14 @@ export default function RegionalExperience() {
 	return (
 		<div className={styles.container}>
 			<Title
-				title="Regional Experience"
-				description="Convert your text between US and UK English. See word-by-word changes highlighted in real-time."
+				title="Regional Experience - BETA"
+				description="Make your content work for our geo teams. Input text to get a side-by-side comparison of your copy with local nuances."
 			/>
 
 			<div className={styles.editorGrid}>
 				<Sidebar type="stats">
 					<div className={styles.readabilityStats}>
-						<h3>Conversion Stats</h3>
+						<h3>Conversion Results</h3>
 						{stats ? (
 							<>
 								<div className={styles.statItem}>
@@ -136,7 +137,7 @@ export default function RegionalExperience() {
 							</>
 						) : (
 							<div className={styles.placeholder}>
-								Enter text to see conversion statistics
+								<Skeleton length={120} />
 							</div>
 						)}
 					</div>

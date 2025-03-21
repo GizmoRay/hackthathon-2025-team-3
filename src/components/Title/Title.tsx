@@ -45,7 +45,7 @@ const Title: FC<TitleProps> = ({
 						pathname === "/regional" ? styles.active : ""
 					}`}
 				>
-					Regional Experience <span className={styles.beta}>BETA</span>
+					Regional Experience
 				</Link>
 			</div>
 		</section>
