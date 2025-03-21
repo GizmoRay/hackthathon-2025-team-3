@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import styles from "./styles.module.css";
+import Title from "@/components/Title/Title";
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 interface Feedback {
 	readability: {
@@ -53,11 +55,16 @@ export default function CopyAnalyzer() {
 		}
 	};
 
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		analyzeCopy();
+	};
+
 	return (
 		<div className={styles.analyzerContainer}>
-			<div className={styles.statsColumn}>
+			<Sidebar type="stats">
 				<div className={styles.readabilityStats}>
-					<h2>Readability</h2>
+					<h2>Readability rating:</h2>
 					{feedback && (
 						<div
 							className={`${styles.score} ${
@@ -65,8 +72,8 @@ export default function CopyAnalyzer() {
 							}`}
 						>
 							{feedback.readability.status === "good"
-								? "Good."
-								: "Needs improvement."}
+								? "Good"
+								: "Needs improvement"}
 						</div>
 					)}
 				</div>
@@ -94,53 +101,65 @@ export default function CopyAnalyzer() {
 						</div>
 					</>
 				)}
-			</div>
+			</Sidebar>
 
 			<div className={styles.mainContent}>
-				<textarea
-					value={text}
-					onChange={(e) => setText(e.target.value)}
-					placeholder="Paste your copy here..."
-					className={styles.textInput}
+				<Title
+					title="Intelligent Style Guide Toolkit"
+					description="Input your text in the box below. Errors in grammar, spelling, and brand voice will appear with highlights. Click the suggestions to learn more."
 				/>
-				<button
-					onClick={analyzeCopy}
-					className={styles.analyzeButton}
-					disabled={isAnalyzing || !text.trim()}
-				>
-					{isAnalyzing ? "Analyzing..." : "Analyze Copy"}
-				</button>
+				<form onSubmit={handleSubmit}>
+					<div className={styles.textareaWrapper}>
+						<textarea
+							value={text}
+							onChange={(e) => setText(e.target.value)}
+							placeholder="Paste your copy here..."
+							className={styles.textInput}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" && !e.shiftKey) {
+									e.preventDefault();
+									handleSubmit(e);
+								}
+							}}
+						/>
+						<div
+							className={`${styles.spinner} ${
+								isAnalyzing ? styles.visible : ""
+							}`}
+						/>
+					</div>
+				</form>
 			</div>
 
 			{feedback && (
-				<div className={styles.recommendationsColumn}>
+				<Sidebar type="list" className={styles.recommendationsColumn}>
 					<div className={`${styles.grammarSection} ${styles.statItem}`}>
-						<h2>Grammar suggestion:</h2>
+						<h3>Grammar suggestion:</h3>
 						<ul>
-							{feedback.grammar.issues.map((issue, index) => (
+							{feedback?.grammar.issues.map((issue, index) => (
 								<li key={`grammar-${index}`}>{issue}</li>
 							))}
 						</ul>
 					</div>
 
 					<div className={`${styles.legalSection} ${styles.statItem}`}>
-						<h2>Legal suggestion:</h2>
+						<h3>Legal suggestion:</h3>
 						<ul>
-							{feedback.legal.issues.map((issue, index) => (
+							{feedback?.legal.issues.map((issue, index) => (
 								<li key={`legal-${index}`}>{issue}</li>
 							))}
 						</ul>
 					</div>
 
 					<div className={`${styles.brandSection} ${styles.statItem}`}>
-						<h2>Brand Voice and Tone:</h2>
+						<h3>Brand Voice and Tone:</h3>
 						<ul>
-							{feedback.brandVoice.issues.map((issue, index) => (
+							{feedback?.brandVoice.issues.map((issue, index) => (
 								<li key={`brand-${index}`}>{issue}</li>
 							))}
 						</ul>
 					</div>
-				</div>
+				</Sidebar>
 			)}
 		</div>
 	);

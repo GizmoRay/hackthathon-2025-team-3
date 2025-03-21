@@ -1,0 +1,26 @@
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	width: 250px;
+}
+
+.title {
+	font-size: 1.2rem;
+	font-weight: 500;
+	margin: 0;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.stats .content {
+	/* Specific styling for stats type if needed */
+}
+
+.list .content {
+	/* Specific styling for list type if needed */
+}
