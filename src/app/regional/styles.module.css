@@ -140,3 +140,20 @@
 	font-weight: 500;
 	font-size: 1rem;
 }
+
+@media (max-width: 768px) {
+	.container {
+		grid-template-columns: 1fr;
+		padding: 1rem;
+	}
+
+	.editorContainer {
+		grid-template-columns: 1fr;
+	}
+
+	.textInput,
+	.resultText {
+		min-height: 200px;
+		font-size: 16px; /* Prevent zoom on mobile */
+	}
+}

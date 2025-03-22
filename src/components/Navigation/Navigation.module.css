@@ -1,12 +1,7 @@
 .nav {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 52px;
-	background-color: white;
+	padding: 1rem 2rem;
 	border-bottom: 1px solid #e5e5e5;
-	z-index: 50;
+	background: white;
 }
 
 .container {
@@ -27,4 +22,14 @@
 .logo {
 	width: 21px;
 	height: 21px;
+}
+
+@media (max-width: 768px) {
+	.nav {
+		padding: 1rem;
+	}
+
+	.logo {
+		font-size: 1rem;
+	}
 }

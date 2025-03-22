@@ -129,3 +129,22 @@
 	font-weight: 500;
 	font-size: 1rem;
 }
+
+@media (max-width: 768px) {
+	.container {
+		grid-template-columns: 1fr;
+		padding: 1rem;
+	}
+
+	.chatContainer {
+		height: calc(70vh);
+	}
+
+	.message {
+		max-width: 90%;
+	}
+
+	.input {
+		font-size: 16px;
+	}
+}

@@ -2,6 +2,7 @@
 	display: flex;
 	gap: 1rem;
 	margin-top: 2rem;
+	flex-wrap: wrap;
 }
 
 .container {
@@ -50,4 +51,13 @@
 .active .beta {
 	background-color: #333;
 	color: #fff;
+}
+
+@media (max-width: 768px) {
+	.toolButton {
+		padding: 0.5rem 1rem;
+		font-size: 0.8rem;
+		flex: 1 1 auto;
+		text-align: center;
+	}
 }
