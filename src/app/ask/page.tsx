@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import styles from "./styles.module.css";
 import Title from "@/components/Title/Title";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import Image from "next/image";
 
 interface Message {
 	role: "user" | "assistant";
@@ -144,7 +145,7 @@ export default function AskPage() {
 							className={styles.sendButton}
 							disabled={isLoading}
 						>
-							Send
+							<Image src="/send.svg" width={21} height={21} alt="send icon" />
 						</button>
 					</form>
 				</div>
