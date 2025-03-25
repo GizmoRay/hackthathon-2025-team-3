@@ -39,7 +39,7 @@ const Navigation: FC = () => {
 							pathname === "/ask" ? styles.active : ""
 						}`}
 					>
-						<span>Ask a Question</span>
+						<span>Style Guide Wizard</span>
 					</Link>
 
 					<Link
@@ -48,7 +48,7 @@ const Navigation: FC = () => {
 							pathname === "/regional" ? styles.active : ""
 						}`}
 					>
-						<span>Regional Localization</span>
+						<span>Regional Experience</span>
 					</Link>
 				</nav>
 			</div>

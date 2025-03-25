@@ -86,7 +86,7 @@ const Title: FC<TitleProps> = ({
 							height={168}
 							className={styles.hubImage}
 						/>
-						<h2>Style Guide Answers</h2>
+						<h2>Style Guide Wizard</h2>
 						<p>
 							Use this search bar style tool to ask a question or search for
 							answers on a specific style guide question.
