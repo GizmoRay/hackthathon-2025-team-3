@@ -80,6 +80,10 @@
 	gap: 1rem;
 }
 
+.hubItem h2 {
+	font-size: 20px;
+}
+
 .outlineButton {
 	display: flex;
 	height: 36px;

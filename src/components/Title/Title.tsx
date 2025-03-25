@@ -66,9 +66,8 @@ const Title: FC<TitleProps> = ({
 						/>
 						<h2>Copy Analyzer</h2>
 						<p>
-							Paste in your draft copy and as watch magic happens. This tool
-							will highlight grammar, style, legal, and voice and tone issues
-							and link to guidance on corrections.
+							Paste in draft copy and watch the magic. This tool highlights
+							grammar, style, and legal issues and links to info on corrections.
 						</p>
 						<Link
 							href="/copy-analyzer"
