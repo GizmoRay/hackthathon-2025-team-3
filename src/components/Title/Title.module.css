@@ -93,6 +93,10 @@
 	margin-top: auto;
 }
 
+.hubImage {
+	border-radius: 8px;
+}
+
 @media (max-width: 768px) {
 	.toolButton {
 		padding: 0.5rem 1rem;

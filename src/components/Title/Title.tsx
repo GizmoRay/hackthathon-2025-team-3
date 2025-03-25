@@ -62,6 +62,7 @@ const Title: FC<TitleProps> = ({
 							alt="ServiceNow Intelligent Style Guide"
 							width={299}
 							height={168}
+							className={styles.hubImage}
 						/>
 						<h2>Copy Analyzer</h2>
 						<p>
@@ -84,6 +85,7 @@ const Title: FC<TitleProps> = ({
 							alt="ServiceNow Intelligent Style Guide"
 							width={299}
 							height={168}
+							className={styles.hubImage}
 						/>
 						<h2>Style Guide Answers</h2>
 						<p>
@@ -105,6 +107,7 @@ const Title: FC<TitleProps> = ({
 							alt="ServiceNow Intelligent Style Guide"
 							width={299}
 							height={168}
+							className={styles.hubImage}
 						/>
 						<h2>Regional Experience BETA</h2>
 						<p>
