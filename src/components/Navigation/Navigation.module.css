@@ -20,6 +20,13 @@
 	font-weight: 700;
 }
 
+.logoContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+	align-items: center;
+}
+
 .logo {
 	width: 21px;
 	height: 21px;
