@@ -1,0 +1,59 @@
+.nav {
+	padding: 1rem 2rem;
+	border-bottom: 1px solid #e5e5e5;
+	background: white;
+}
+
+.container {
+	/* max-width: 1200px; */
+	margin: 0 auto;
+	padding: 0 1rem;
+	height: 100%;
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	padding: 5px 0;
+}
+
+.title {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.logoContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.logo {
+	width: 21px;
+	height: 21px;
+}
+
+.navLinks {
+	display: inline-flex;
+	gap: 20px;
+}
+
+.toolButton {
+	box-sizing: border-box;
+}
+
+.toolButton.active {
+	background: linear-gradient(white, white) padding-box,
+		linear-gradient(90deg, #62d84e 0%, #24c2ce 80%) border-box;
+	border-bottom: 4px solid transparent;
+	margin-bottom: -4px;
+}
+
+@media (max-width: 768px) {
+	.nav {
+		padding: 1rem;
+	}
+
+	.logo {
+		font-size: 1rem;
+	}
+}
