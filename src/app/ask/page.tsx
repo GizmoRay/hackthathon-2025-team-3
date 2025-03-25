@@ -104,7 +104,7 @@ export default function AskPage() {
 			<div className={styles.mainColumn}>
 				<Title
 					title="Ask a Question"
-					description="Get instant answers about ServiceNow style guidelines and best practices."
+					description="Get answers to specific style questions."
 				/>
 
 				<div className={styles.chatContainer}>

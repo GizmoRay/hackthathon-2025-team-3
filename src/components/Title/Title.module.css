@@ -1,3 +1,12 @@
+.hub .container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 1rem;
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
 .toolSwitcher {
 	display: flex;
 	gap: 1rem;
@@ -51,6 +60,37 @@
 .active .beta {
 	background-color: #333;
 	color: #fff;
+}
+
+.hubSwapper {
+	display: flex;
+	align-items: flex-start;
+	gap: 32px;
+	flex: 1 0 0;
+	align-self: stretch;
+	flex-wrap: wrap;
+}
+
+.hubItem {
+	display: flex;
+	width: clamp(290px, 2.5vw, 290px);
+	flex-direction: column;
+	align-items: flex-start;
+	align-self: stretch;
+	gap: 1rem;
+}
+
+.outlineButton {
+	display: flex;
+	height: 36px;
+	min-height: 36px;
+	padding: 0px 20px;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	border-radius: 500px;
+	border: 2px solid #62d84e;
+	margin-top: auto;
 }
 
 @media (max-width: 768px) {

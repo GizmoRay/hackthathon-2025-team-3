@@ -2,8 +2,13 @@
 
 import { FC } from "react";
 import styles from "./Navigation.module.css";
+import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+
 const Navigation: FC = () => {
+	const pathname = usePathname();
+
 	return (
 		<nav className={styles.nav}>
 			<div className={styles.container}>
@@ -16,6 +21,34 @@ const Navigation: FC = () => {
 					/>
 				</div>
 				<div className={styles.title}>ServiceNow Intelligent Style Guide</div>
+				<nav className={styles.navLinks}>
+					<Link
+						href="/copy-analyzer"
+						className={`${styles.toolButton} ${
+							pathname === "/copy-analyzer" ? styles.active : ""
+						}`}
+					>
+						<span>Copy Analyzer</span>
+					</Link>
+
+					<Link
+						href="/ask"
+						className={`${styles.toolButton} ${
+							pathname === "/ask" ? styles.active : ""
+						}`}
+					>
+						<span>Ask a Question</span>
+					</Link>
+
+					<Link
+						href="/regional"
+						className={`${styles.toolButton} ${
+							pathname === "/regional" ? styles.active : ""
+						}`}
+					>
+						<span>Regional Localization</span>
+					</Link>
+				</nav>
 			</div>
 		</nav>
 	);

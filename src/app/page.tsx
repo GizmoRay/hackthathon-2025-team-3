@@ -1,25 +1,21 @@
-import Link from "next/link";
+import Image from "next/image";
+import styles from "./page.module.css";
+import Title from "@/components/Title/Title";
 
 export default function Home() {
 	return (
-		<div>
-			<h1>Content Tools</h1>
-			<nav>
-				<Link href="/copy-analyzer">
-					<h2>Copy Analyzer</h2>
-					<p>Analyze and improve your content with AI-powered suggestions</p>
-				</Link>
-
-				<Link href="/ask">
-					<h2>Ask a Question</h2>
-					<p>Get answers about content guidelines and best practices</p>
-				</Link>
-
-				<Link href="/localization">
-					<h2>Regional Localization</h2>
-					<p>Translate and adapt content for different regions</p>
-				</Link>
-			</nav>
+		<div className={styles.hub}>
+			<Image
+				src={"/Banner.png"}
+				width={952}
+				height={238}
+				alt="Banner image for overview page. We are One Voice"
+			/>
+			<Title
+				type="hub"
+				title="Intelligent Style Guide Toolkit"
+				description="Get instant answers about ServiceNow style guidelines and best practices."
+			/>
 		</div>
 	);
 }

@@ -12,6 +12,7 @@
 	display: flex;
 	gap: 1rem;
 	align-items: center;
+	padding: 5px 0;
 }
 
 .title {
@@ -22,6 +23,21 @@
 .logo {
 	width: 21px;
 	height: 21px;
+}
+
+.navLinks {
+	display: inline-flex;
+	gap: 20px;
+}
+
+.toolButton {
+	box-sizing: content-box;
+}
+
+.toolButton.active {
+	background: linear-gradient(white, white) padding-box,
+		linear-gradient(90deg, #62d84e 0%, #24c2ce 80%) border-box;
+	border-bottom: 4px solid transparent;
 }
 
 @media (max-width: 768px) {
