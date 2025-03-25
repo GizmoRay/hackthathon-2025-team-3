@@ -58,7 +58,7 @@ const Title: FC<TitleProps> = ({
 				<div className={styles.hubSwapper}>
 					<div className={styles.hubItem}>
 						<Image
-							src="/Image.png"
+							src="/analyze.png"
 							alt="ServiceNow Intelligent Style Guide"
 							width={299}
 							height={168}
@@ -80,7 +80,7 @@ const Title: FC<TitleProps> = ({
 					</div>
 					<div className={styles.hubItem}>
 						<Image
-							src="/Image.png"
+							src="/ask.png"
 							alt="ServiceNow Intelligent Style Guide"
 							width={299}
 							height={168}
@@ -101,7 +101,7 @@ const Title: FC<TitleProps> = ({
 					</div>
 					<div className={styles.hubItem}>
 						<Image
-							src="/Image.png"
+							src="/regional.png"
 							alt="ServiceNow Intelligent Style Guide"
 							width={299}
 							height={168}

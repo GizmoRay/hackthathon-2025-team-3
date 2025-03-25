@@ -38,13 +38,14 @@
 }
 
 .toolButton {
-	box-sizing: content-box;
+	box-sizing: border-box;
 }
 
 .toolButton.active {
 	background: linear-gradient(white, white) padding-box,
 		linear-gradient(90deg, #62d84e 0%, #24c2ce 80%) border-box;
 	border-bottom: 4px solid transparent;
+	margin-bottom: -4px;
 }
 
 @media (max-width: 768px) {
