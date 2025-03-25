@@ -129,6 +129,9 @@ export async function POST(request: Request) {
 					brandVoice: {
 						issues: cleanFeedback(feedback.brand_voice_feedback),
 					},
+					highlighted: {
+						issues: feedback.highlighted_text,
+					},
 					characterCount: body.text.length,
 				});
 			}

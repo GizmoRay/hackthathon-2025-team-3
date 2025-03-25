@@ -1,5 +1,19 @@
 .skeleton {
-	background-color: #e0e0e0;
 	border-radius: 30px;
 	height: 16px;
+	background: linear-gradient(270deg, #e0e0e0, #c0c0c0, #e0e0e0);
+	background-size: 400% 400%;
+	animation: pulse 4s ease infinite;
+}
+
+@keyframes pulse {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

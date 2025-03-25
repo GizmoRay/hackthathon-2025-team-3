@@ -60,6 +60,8 @@ export default function CopyAnalyzer() {
 		analyzeCopy();
 	};
 
+	console.log("feedback", feedback);
+
 	return (
 		<div className={styles.container}>
 			<Sidebar type="stats">
