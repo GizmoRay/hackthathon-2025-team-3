@@ -31,7 +31,15 @@ interface Highlight {
 	end: number;
 }
 
-function extractHighlights(text: string, feedback: any): Highlight[] {
+interface Feedback {
+	highlighted: {
+		issues: {
+			[key: string]: string;
+		};
+	};
+}
+
+function extractHighlights(text: string, feedback: Feedback): Highlight[] {
 	const highlights: Highlight[] = [];
 
 	if (!feedback.highlighted?.issues) return highlights;
