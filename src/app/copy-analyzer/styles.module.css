@@ -47,7 +47,7 @@
 }
 
 .score.good {
-	color: #4caf50; /* Material Design Green */
+	color: var(--arc-brand-green-900);
 }
 
 .score.needs-improvement {
@@ -55,7 +55,7 @@
 }
 
 .characterStats {
-	background-color: #e8f5e9;
+	background-color: var(--arc-brand-green-100);
 	padding: 1rem;
 	border-radius: 8px;
 }
@@ -78,33 +78,34 @@
 	gap: 1rem;
 }
 
-.textInput {
-	flex: 1;
-	min-height: 300px;
+.textareaWrapper {
+	position: relative;
 	width: 100%;
-	padding: 3rem 1rem 1rem;
+	min-height: 300px;
 	border: 1px solid #e0e0e0;
 	border-radius: 8px;
+}
+
+.textInput {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	min-height: 300px;
+	padding: 3rem 1rem 1rem;
 	font-size: 16px;
-	/* resize: none; */
 	font-family: monospace;
+	border: none;
+	background: transparent;
+	color: transparent;
+	caret-color: black;
+	resize: vertical;
+	z-index: 2;
 }
 
 .aiIcon {
 	left: 1rem;
 	position: absolute;
 	top: 1rem;
-}
-
-.analyzeButton {
-	padding: 0.75rem 1.5rem;
-	background-color: #2196f3;
-	color: white;
-	border: none;
-	border-radius: 6px;
-	cursor: pointer;
-	font-size: 16px;
-	align-self: flex-end;
 }
 
 .recommendationsColumn {
@@ -115,17 +116,17 @@
 
 .grammarSection,
 .grammarStats {
-	background-color: #ffebee;
+	background-color: var(--arc-red);
 }
 
 .legalSection,
 .legalStats {
-	background-color: #fff8e1;
+	background-color: var(--arc-yellow);
 }
 
 .brandSection,
 .brandStats {
-	background-color: #e0f7fa;
+	background-color: var(--arc-blue);
 }
 
 .recommendationsColumn h2 {
@@ -156,9 +157,35 @@
 	color: #666;
 }
 
-.textareaWrapper {
-	position: relative;
-	width: 100%;
+.highlights {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 3rem 1rem 1rem;
+	font-family: monospace;
+	font-size: 16px;
+	color: black;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.highlights mark {
+	border-radius: 2px;
+	padding: 2px 0;
+}
+
+.highlights mark.grammar {
+	background-color: var(--arc-red);
+}
+
+.highlights mark.legal {
+	background-color: var(--arc-yellow);
+}
+
+.highlights mark.brand {
+	background-color: var(--arc-blue);
 }
 
 .spinner {
@@ -225,9 +252,10 @@
 		order: 3; /* Keep recommendations at bottom */
 	}
 
-	.textInput {
-		min-height: 200px;
-		font-size: 16px;
+	.textInput,
+	.highlights {
+		font-size: 14px;
+		padding: 2.5rem 0.75rem 0.75rem;
 	}
 
 	.analyzeButton {
