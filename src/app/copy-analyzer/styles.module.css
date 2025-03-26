@@ -47,7 +47,7 @@
 }
 
 .score.good {
-	color: #4caf50; /* Material Design Green */
+	color: var(--arc-brand-green-900);
 }
 
 .score.needs-improvement {
@@ -55,7 +55,7 @@
 }
 
 .characterStats {
-	background-color: #e8f5e9;
+	background-color: var(--arc-brand-green-100);
 	padding: 1rem;
 	border-radius: 8px;
 }
@@ -96,17 +96,6 @@
 	top: 1rem;
 }
 
-.analyzeButton {
-	padding: 0.75rem 1.5rem;
-	background-color: #2196f3;
-	color: white;
-	border: none;
-	border-radius: 6px;
-	cursor: pointer;
-	font-size: 16px;
-	align-self: flex-end;
-}
-
 .recommendationsColumn {
 	display: flex;
 	flex-direction: column;
@@ -115,17 +104,17 @@
 
 .grammarSection,
 .grammarStats {
-	background-color: #ffebee;
+	background-color: var(--arc-red);
 }
 
 .legalSection,
 .legalStats {
-	background-color: #fff8e1;
+	background-color: var(--arc-yellow);
 }
 
 .brandSection,
 .brandStats {
-	background-color: #e0f7fa;
+	background-color: var(--arc-blue);
 }
 
 .recommendationsColumn h2 {
