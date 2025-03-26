@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styles from "./styles.module.css";
+import Image from "next/image";
 import Title from "@/components/Title/Title";
 import Sidebar from "@/components/Sidebar/Sidebar";
 
@@ -114,6 +115,13 @@ export default function CopyAnalyzer() {
 				<div className={styles.editorContainer}>
 					<form onSubmit={handleSubmit}>
 						<div className={styles.textareaWrapper}>
+							<Image
+								src="/Stars.svg"
+								alt="ai stars icon"
+								width={21}
+								height={21}
+								className={styles.aiIcon}
+							/>
 							<textarea
 								value={text}
 								onChange={(e) => setText(e.target.value)}
@@ -131,6 +139,19 @@ export default function CopyAnalyzer() {
 									isAnalyzing ? styles.visible : ""
 								}`}
 							/>
+							<div
+								className={`${styles.voiceButton} ${
+									isAnalyzing ? styles.invisible: ""
+								}`}
+							>
+								<Image
+								src="/voice-button.svg"
+								alt="voice button icon"
+								width={50}
+								height={50}
+								className={styles.aiIcon}
+							/>
+							</div>
 						</div>
 					</form>
 				</div>

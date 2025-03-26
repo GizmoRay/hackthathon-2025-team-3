@@ -51,6 +51,20 @@ const Navigation: FC = () => {
 						<span>Regional Experience</span>
 					</Link>
 				</nav>
+				<div className={styles.sideApps}>
+						<Image
+							src="/microphone.svg"
+							alt="microphone icon"
+							width={40}
+							height={20}
+						/>
+						<Image
+							src="/language-globe.svg"
+							alt="language globe icon"
+							width={20}
+							height={20}
+						/>
+					</div>
 			</div>
 		</nav>
 	);

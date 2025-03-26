@@ -48,6 +48,13 @@
 	margin-bottom: -4px;
 }
 
+.sideApps {
+	display: flex;
+	filter: opacity(50%);
+	gap: 10px;
+	margin-left: auto;
+}
+
 @media (max-width: 768px) {
 	.nav {
 		padding: 1rem;
