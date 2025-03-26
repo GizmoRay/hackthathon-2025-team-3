@@ -7,6 +7,9 @@
 	--arc-blue: #d7eff1;
 	--arc-yellow: #f9f2cb;
 	--arc-violet: #dee3f8;
+	--arc-red-rgb: 244, 67, 54;
+	--arc-yellow-rgb: 255, 235, 59;
+	--arc-blue-rgb: 33, 150, 243;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Title from "@/components/Title/Title";
@@ -24,9 +24,164 @@ interface Feedback {
 	characterCount: number;
 }
 
+interface Highlight {
+	text: string;
+	type: "grammar" | "legal" | "brand" | "readability";
+	start: number;
+	end: number;
+}
+
+function extractHighlights(text: string, feedback: any): Highlight[] {
+	const highlights: Highlight[] = [];
+
+	if (!feedback.highlighted?.issues) return highlights;
+
+	// Map the API's highlight types to our component's types
+	const typeMap: {
+		[key: string]: "grammar" | "legal" | "brand";
+	} = {
+		Grammar: "grammar",
+		Legal: "legal",
+		"Brand Voice": "brand",
+	};
+
+	// Process each highlight type
+	Object.entries(feedback.highlighted.issues).forEach(
+		([type, highlightedText]) => {
+			if (typeMap[type] && typeof highlightedText === "string") {
+				// Handle comma-separated highlights for grammar
+				if (type === "Grammar") {
+					const words = highlightedText.split(", ");
+					words.forEach((word) => {
+						const textPosition = text.indexOf(word);
+						if (textPosition >= 0) {
+							highlights.push({
+								text: word,
+								type: typeMap[type],
+								start: textPosition,
+								end: textPosition + word.length,
+							});
+						}
+					});
+				} else {
+					const textPosition = text.indexOf(highlightedText);
+					if (textPosition >= 0) {
+						highlights.push({
+							text: highlightedText,
+							type: typeMap[type],
+							start: textPosition,
+							end: textPosition + highlightedText.length,
+						});
+					}
+				}
+			}
+		}
+	);
+
+	return highlights;
+}
+
+function HighlightedText({
+	text,
+	highlights,
+}: {
+	text: string;
+	highlights: Highlight[];
+}) {
+	console.log("Text:", text);
+	console.log("Highlights:", highlights);
+	// Split text into segments that preserve spaces
+	const segments = text.split(/([\s\n])/);
+	let currentPos = 0;
+
+	return (
+		<>
+			{segments.map((segment, index) => {
+				const start = currentPos;
+				const end = start + segment.length;
+				currentPos = end;
+
+				// Find any highlight that overlaps with this segment
+				const highlight = highlights.find(
+					(h) =>
+						(start >= h.start && start < h.end) ||
+						(end > h.start && end <= h.end)
+				);
+
+				if (highlight) {
+					return (
+						<mark key={index} className={styles[highlight.type]}>
+							{segment}
+						</mark>
+					);
+				}
+				return <span key={index}>{segment}</span>;
+			})}
+		</>
+	);
+}
+
+function HighlightedTextarea({
+	text,
+	highlights,
+	onChange,
+	onSubmit,
+	isAnalyzing,
+}: {
+	text: string;
+	highlights: Highlight[];
+	onChange: (text: string) => void;
+	onSubmit: (e: React.KeyboardEvent) => void;
+	isAnalyzing: boolean;
+}) {
+	return (
+		<div className={styles.textareaWrapper}>
+			<Image
+				src="/Stars.svg"
+				alt="ai stars icon"
+				width={21}
+				height={21}
+				className={styles.aiIcon}
+			/>
+			<textarea
+				value={text}
+				onChange={(e) => onChange(e.target.value)}
+				placeholder="Paste your copy here..."
+				className={styles.textInput}
+				onKeyDown={(e) => {
+					if (e.key === "Enter" && !e.shiftKey) {
+						e.preventDefault();
+						onSubmit(e);
+					}
+				}}
+			/>
+			<div className={styles.highlights}>
+				<HighlightedText text={text} highlights={highlights} />
+			</div>
+			<div
+				className={`${styles.spinner} ${isAnalyzing ? styles.visible : ""}`}
+			/>
+			<div
+				className={`${styles.voiceButton} ${
+					isAnalyzing ? styles.invisible : ""
+				}`}
+			>
+				<Image
+					src="/voice-button.svg"
+					alt="voice button icon"
+					width={50}
+					height={50}
+					className={styles.aiIcon}
+				/>
+			</div>
+		</div>
+	);
+}
+
 export default function CopyAnalyzer() {
 	const [text, setText] = useState("");
 	const [feedback, setFeedback] = useState<Feedback | null>(null);
+	const [highlights, setHighlights] = useState<Highlight[]>([]);
 	const [isAnalyzing, setIsAnalyzing] = useState(false);
 
 	const analyzeCopy = async () => {
@@ -60,6 +215,12 @@ export default function CopyAnalyzer() {
 		e.preventDefault();
 		analyzeCopy();
 	};
+
+	useEffect(() => {
+		if (feedback) {
+			setHighlights(extractHighlights(text, feedback));
+		}
+	}, [feedback, text]);
 
 	console.log("feedback", feedback);
 
@@ -114,45 +275,13 @@ export default function CopyAnalyzer() {
 
 				<div className={styles.editorContainer}>
 					<form onSubmit={handleSubmit}>
-						<div className={styles.textareaWrapper}>
-							<Image
-								src="/Stars.svg"
-								alt="ai stars icon"
-								width={21}
-								height={21}
-								className={styles.aiIcon}
-							/>
-							<textarea
-								value={text}
-								onChange={(e) => setText(e.target.value)}
-								placeholder="Paste your copy here..."
-								className={styles.textInput}
-								onKeyDown={(e) => {
-									if (e.key === "Enter" && !e.shiftKey) {
-										e.preventDefault();
-										handleSubmit(e);
-									}
-								}}
-							/>
-							<div
-								className={`${styles.spinner} ${
-									isAnalyzing ? styles.visible : ""
-								}`}
-							/>
-							<div
-								className={`${styles.voiceButton} ${
-									isAnalyzing ? styles.invisible: ""
-								}`}
-							>
-								<Image
-								src="/voice-button.svg"
-								alt="voice button icon"
-								width={50}
-								height={50}
-								className={styles.aiIcon}
-							/>
-							</div>
-						</div>
+						<HighlightedTextarea
+							text={text}
+							highlights={highlights}
+							onChange={(value) => setText(value)}
+							onSubmit={handleSubmit}
+							isAnalyzing={isAnalyzing}
+						/>
 					</form>
 				</div>
 			</div>
