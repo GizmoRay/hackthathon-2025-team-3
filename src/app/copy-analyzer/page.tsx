@@ -34,7 +34,9 @@ interface Highlight {
 interface Feedback {
 	highlighted: {
 		issues: {
-			[key: string]: string;
+			grammar_feedback?: string[];
+			legal_feedback?: string[];
+			brand_voice_feedback?: string[];
 		};
 	};
 }
@@ -44,47 +46,72 @@ function extractHighlights(text: string, feedback: Feedback): Highlight[] {
 
 	if (!feedback.highlighted?.issues) return highlights;
 
-	// Map the API's highlight types to our component's types
-	const typeMap: {
-		[key: string]: "grammar" | "legal" | "brand";
-	} = {
-		Grammar: "grammar",
-		Legal: "legal",
-		"Brand Voice": "brand",
-	};
+	// First collect all highlights
+	const allHighlights: Highlight[] = [];
 
-	// Process each highlight type
-	Object.entries(feedback.highlighted.issues).forEach(
-		([type, highlightedText]) => {
-			if (typeMap[type] && typeof highlightedText === "string") {
-				// Handle comma-separated highlights for grammar
-				if (type === "Grammar") {
-					const words = highlightedText.split(", ");
-					words.forEach((word) => {
-						const textPosition = text.indexOf(word);
-						if (textPosition >= 0) {
-							highlights.push({
-								text: word,
-								type: typeMap[type],
-								start: textPosition,
-								end: textPosition + word.length,
-							});
-						}
-					});
-				} else {
+	// Process grammar feedback
+	if (feedback.highlighted.issues.grammar_feedback) {
+		feedback.highlighted.issues.grammar_feedback.forEach((highlightedText) => {
+			if (text.includes(highlightedText)) {
+				const textPosition = text.indexOf(highlightedText);
+				allHighlights.push({
+					text: highlightedText,
+					type: "grammar",
+					start: textPosition,
+					end: textPosition + highlightedText.length,
+				});
+			}
+		});
+	}
+
+	// Process legal feedback
+	if (feedback.highlighted.issues.legal_feedback) {
+		feedback.highlighted.issues.legal_feedback.forEach((highlightedText) => {
+			if (text.includes(highlightedText)) {
+				const textPosition = text.indexOf(highlightedText);
+				allHighlights.push({
+					text: highlightedText,
+					type: "legal",
+					start: textPosition,
+					end: textPosition + highlightedText.length,
+				});
+			}
+		});
+	}
+
+	// Process brand voice feedback
+	if (feedback.highlighted.issues.brand_voice_feedback) {
+		feedback.highlighted.issues.brand_voice_feedback.forEach(
+			(highlightedText) => {
+				if (text.includes(highlightedText)) {
 					const textPosition = text.indexOf(highlightedText);
-					if (textPosition >= 0) {
-						highlights.push({
-							text: highlightedText,
-							type: typeMap[type],
-							start: textPosition,
-							end: textPosition + highlightedText.length,
-						});
-					}
+					allHighlights.push({
+						text: highlightedText,
+						type: "brand",
+						start: textPosition,
+						end: textPosition + highlightedText.length,
+					});
 				}
 			}
+		);
+	}
+
+	// Sort highlights by length (shortest first) to prioritize specific terms
+	allHighlights.sort((a, b) => a.text.length - b.text.length);
+
+	// Add highlights, ensuring no overlap with existing shorter highlights
+	allHighlights.forEach((highlight) => {
+		// Check if this highlight overlaps with any existing ones
+		const hasOverlap = highlights.some(
+			(existing) =>
+				(highlight.start >= existing.start && highlight.start < existing.end) ||
+				(highlight.end > existing.start && highlight.end <= existing.end)
+		);
+
+		if (!hasOverlap) {
+			highlights.push(highlight);
 		}
-	);
+	});
 
 	return highlights;
 }
@@ -96,34 +123,66 @@ function HighlightedText({
 	text: string;
 	highlights: Highlight[];
 }) {
-	console.log("Text:", text);
-	console.log("Highlights:", highlights);
-	// Split text into segments that preserve spaces
-	const segments = text.split(/([\s\n])/);
+	// Create an array of all highlight boundaries
+	const boundaries = highlights.reduce<
+		{ pos: number; highlight: Highlight | null }[]
+	>((acc, highlight) => {
+		// Add start and end positions for each highlight
+		acc.push({ pos: highlight.start, highlight });
+		acc.push({ pos: highlight.end, highlight: null });
+		return acc;
+	}, []);
+
+	// Sort boundaries by position
+	boundaries.sort((a, b) => a.pos - b.pos);
+
+	// Split text into segments based on highlight boundaries
+	const segments: { text: string; highlights: Highlight[] }[] = [];
 	let currentPos = 0;
+	let activeHighlights: Highlight[] = [];
+
+	boundaries.forEach(({ pos, highlight }) => {
+		if (pos > currentPos) {
+			// Add segment from current position to this boundary
+			segments.push({
+				text: text.slice(currentPos, pos),
+				highlights: [...activeHighlights],
+			});
+		}
+
+		if (highlight) {
+			// Start of a highlight
+			activeHighlights.push(highlight);
+		} else {
+			// End of a highlight
+			activeHighlights = activeHighlights.filter((h) => h.end !== pos);
+		}
+		currentPos = pos;
+	});
+
+	// Add final segment if there's remaining text
+	if (currentPos < text.length) {
+		segments.push({
+			text: text.slice(currentPos),
+			highlights: [],
+		});
+	}
 
 	return (
 		<>
 			{segments.map((segment, index) => {
-				const start = currentPos;
-				const end = start + segment.length;
-				currentPos = end;
-
-				// Find any highlight that overlaps with this segment
-				const highlight = highlights.find(
-					(h) =>
-						(start >= h.start && start < h.end) ||
-						(end > h.start && end <= h.end)
-				);
-
-				if (highlight) {
-					return (
-						<mark key={index} className={styles[highlight.type]}>
-							{segment}
-						</mark>
-					);
+				if (segment.highlights.length === 0) {
+					return <span key={index}>{segment.text}</span>;
 				}
-				return <span key={index}>{segment}</span>;
+
+				// Apply all highlight classes
+				const classes = segment.highlights.map((h) => styles[h.type]).join(" ");
+
+				return (
+					<mark key={index} className={classes}>
+						{segment.text}
+					</mark>
+				);
 			})}
 		</>
 	);

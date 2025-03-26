@@ -188,6 +188,48 @@
 	background-color: var(--arc-blue);
 }
 
+.highlights mark.grammar.legal {
+	background: linear-gradient(
+		45deg,
+		var(--arc-red) 0%,
+		var(--arc-red) 50%,
+		var(--arc-yellow) 50%,
+		var(--arc-yellow) 100%
+	);
+}
+
+.highlights mark.grammar.brand {
+	background: linear-gradient(
+		45deg,
+		var(--arc-red) 0%,
+		var(--arc-red) 50%,
+		var(--arc-blue) 50%,
+		var(--arc-blue) 100%
+	);
+}
+
+.highlights mark.legal.brand {
+	background: linear-gradient(
+		45deg,
+		var(--arc-yellow) 0%,
+		var(--arc-yellow) 50%,
+		var(--arc-blue) 50%,
+		var(--arc-blue) 100%
+	);
+}
+
+.highlights mark.grammar.legal.brand {
+	background: linear-gradient(
+		45deg,
+		var(--arc-red) 0%,
+		var(--arc-red) 33%,
+		var(--arc-yellow) 33%,
+		var(--arc-yellow) 66%,
+		var(--arc-blue) 66%,
+		var(--arc-blue) 100%
+	);
+}
+
 .spinner {
 	position: absolute;
 	bottom: 1rem;
