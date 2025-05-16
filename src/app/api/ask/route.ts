@@ -2,36 +2,22 @@ import { NextResponse } from "next/server";
 
 const encoder = new TextEncoder();
 
-function getPersonaApiUrl(persona: string): string {
-	switch (persona) {
-		case "cio":
-			return "https://api.copy.ai/api/workflow/WCFG-56c972b6-d4e5-4ab4-b0f9-8b862d3e4a96/run";
-		case "cco":
-			return "https://api.copy.ai/api/workflow/WCFG-d1182027-180c-4181-9104-7f9e7b815521/run";
-		case "paitw":
-			return "https://api.copy.ai/api/workflow/WCFG-bf0f45b0-09f1-48aa-9051-ba450545690b/run";
-		default:
-			throw new Error("Invalid persona");
-	}
-}
-
-async function waitForResult(
-	runId: string,
-	apiKey: string,
-	personaUrl: string
-): Promise<string> {
+async function waitForResult(runId: string, apiKey: string): Promise<string> {
 	const maxAttempts = 10;
 	let attempts = 0;
 
 	while (attempts < maxAttempts) {
 		try {
-			const response = await fetch(`${personaUrl}/${runId}`, {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-					"x-copy-ai-api-key": apiKey,
-				},
-			});
+			const response = await fetch(
+				`https://api.copy.ai/api/workflow/WCFG-5475d3a8-e5d7-4c96-92be-cb62bc2777af/run/${runId}`,
+				{
+					method: "GET",
+					headers: {
+						Accept: "application/json",
+						"x-copy-ai-api-key": apiKey,
+					},
+				}
+			);
 
 			if (!response.ok) {
 				throw new Error(`Failed to fetch result: ${response.status}`);
@@ -74,45 +60,30 @@ async function* streamResponse(text: string) {
 
 export async function POST(request: Request) {
 	try {
-		const { message, persona } = await request.json();
+		const { message } = await request.json();
 		const apiKey = process.env.COPY_AI_API_KEY || "";
 
 		if (!apiKey) {
 			throw new Error("API key not configured");
 		}
 
-		if (!message) {
-			return NextResponse.json(
-				{ error: "Message is required" },
-				{ status: 400 }
-			);
-		}
-		if (!persona) {
-			return NextResponse.json(
-				{ error: "Persona is required" },
-				{ status: 400 }
-			);
-		}
-
-		const personaApiUrl = getPersonaApiUrl(persona);
-		if (!personaApiUrl) {
-			return NextResponse.json({ error: "Invalid persona" }, { status: 400 });
-		}
-
 		// Start the workflow
-		const initResponse = await fetch(personaApiUrl, {
-			method: "POST",
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-				"x-copy-ai-api-key": apiKey,
-			},
-			body: JSON.stringify({
-				startVariables: {
-					question: message,
+		const initResponse = await fetch(
+			"https://api.copy.ai/api/workflow/WCFG-5475d3a8-e5d7-4c96-92be-cb62bc2777af/run",
+			{
+				method: "POST",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+					"x-copy-ai-api-key": apiKey,
 				},
-			}),
-		});
+				body: JSON.stringify({
+					startVariables: {
+						question: message,
+					},
+				}),
+			}
+		);
 
 		const initResponseText = await initResponse.text();
 		console.log("Initial response:", initResponseText);
@@ -129,7 +100,7 @@ export async function POST(request: Request) {
 		console.log("Parsed initial response:", data);
 
 		// Wait for and get the final answer
-		const answer = await waitForResult(data.id, apiKey, personaApiUrl);
+		const answer = await waitForResult(data.id, apiKey);
 
 		if (!answer) {
 			throw new Error("No answer received");

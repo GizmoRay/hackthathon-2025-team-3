@@ -12,8 +12,8 @@ export default function Home() {
 			/>*/}
 			<Title
 				type="hub"
-				title="ServiceNow Persona Agents"
-				description="Get instant answers to questions about the personas of ServiceNow."
+				title="Intelligent Style Guide Toolkit"
+				description="Get instant answers about ServiceNow style guidelines and best practices."
 			/>
 		</div>
 	);

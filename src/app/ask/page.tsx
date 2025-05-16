@@ -5,7 +5,6 @@ import styles from "./styles.module.css";
 import Title from "@/components/Title/Title";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 
 interface Message {
 	role: "user" | "assistant";
@@ -14,13 +13,9 @@ interface Message {
 }
 
 export default function AskPage() {
-	const urlParams = useSearchParams();
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const perosnaParam = urlParams.get("persona");
-	const [preset] = useState(perosnaParam || "cio");
-	const [persona, setPersona] = useState(preset);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const scrollToBottom = () => {
@@ -52,7 +47,7 @@ export default function AskPage() {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ message: userMessage, persona }),
+				body: JSON.stringify({ message: userMessage }),
 			});
 
 			if (!response.ok || !response.body) {
@@ -109,19 +104,9 @@ export default function AskPage() {
 
 			<div className={styles.mainColumn}>
 				<Title
-					title="Ask a Persona"
-					description="Get answers to specific questions for ServiceNow personas."
+					title="Ask a Question"
+					description="Get answers to specific style questions."
 				/>
-				{/* dropdown to fetch specific persona data, that allows preset from query param through state */}
-				<select
-					value={persona}
-					onChange={(e) => setPersona(e.target.value)}
-					className={styles.personaSelect}
-				>
-					<option value="cio">CIO</option>
-					<option value="cco">CCO</option>
-					<option value="paitw">PAITW</option>
-				</select>
 
 				<div className={styles.chatContainer}>
 					<div className={styles.messagesContainer}>

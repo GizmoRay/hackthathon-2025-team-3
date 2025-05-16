@@ -4,10 +4,10 @@ import { FC } from "react";
 import styles from "./Navigation.module.css";
 import Link from "next/link";
 import Image from "next/image";
-// import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const Navigation: FC = () => {
-	// const pathname = usePathname();
+	const pathname = usePathname();
 
 	return (
 		<nav className={styles.nav}>
@@ -21,16 +21,16 @@ const Navigation: FC = () => {
 							height={21}
 						/>
 					</div>
-					<div className={styles.title}>ServiceNow Persona Agents</div>
+					<div className={styles.title}>ServiceNow Intelligent Style Guide</div>
 				</Link>
-				{/* <nav className={styles.navLinks}>
+				<nav className={styles.navLinks}>
 					<Link
 						href="/copy-analyzer"
 						className={`${styles.toolButton} ${
 							pathname === "/copy-analyzer" ? styles.active : ""
 						}`}
 					>
-						<span>CIO</span>
+						<span>Copy Analyzer</span>
 					</Link>
 
 					<Link
@@ -39,7 +39,7 @@ const Navigation: FC = () => {
 							pathname === "/ask" ? styles.active : ""
 						}`}
 					>
-						<span>CCO</span>
+						<span>Style Guide Wizard</span>
 					</Link>
 
 					<Link
@@ -48,23 +48,23 @@ const Navigation: FC = () => {
 							pathname === "/regional" ? styles.active : ""
 						}`}
 					>
-						<span>PAITW</span>
+						<span>Regional Experience</span>
 					</Link>
-				</nav> */}
+				</nav>
 				<div className={styles.sideApps}>
-					<Image
-						src="/microphone.svg"
-						alt="microphone icon"
-						width={40}
-						height={20}
-					/>
-					<Image
-						src="/language-globe.svg"
-						alt="language globe icon"
-						width={20}
-						height={20}
-					/>
-				</div>
+						<Image
+							src="/microphone.svg"
+							alt="microphone icon"
+							width={40}
+							height={20}
+						/>
+						<Image
+							src="/language-globe.svg"
+							alt="language globe icon"
+							width={20}
+							height={20}
+						/>
+					</div>
 			</div>
 		</nav>
 	);
