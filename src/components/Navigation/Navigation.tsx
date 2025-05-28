@@ -21,7 +21,7 @@ const Navigation: FC = () => {
 							height={21}
 						/>
 					</div>
-					<div className={styles.title}>ServiceNow Intelligent Style Guide</div>
+					<div className={styles.title}>ServiceNow OneVoice Assist</div>
 				</Link>
 				<nav className={styles.navLinks}>
 					<Link
@@ -30,7 +30,7 @@ const Navigation: FC = () => {
 							pathname === "/copy-analyzer" ? styles.active : ""
 						}`}
 					>
-						<span>Copy Analyzer</span>
+						<span>ServiceNow Writing Buddy</span>
 					</Link>
 
 					<Link
@@ -39,7 +39,7 @@ const Navigation: FC = () => {
 							pathname === "/ask" ? styles.active : ""
 						}`}
 					>
-						<span>Style Guide Wizard</span>
+						<span>Brand Style Checker</span>
 					</Link>
 
 					<Link
@@ -52,19 +52,19 @@ const Navigation: FC = () => {
 					</Link>
 				</nav>
 				<div className={styles.sideApps}>
-						<Image
-							src="/microphone.svg"
-							alt="microphone icon"
-							width={40}
-							height={20}
-						/>
-						<Image
-							src="/language-globe.svg"
-							alt="language globe icon"
-							width={20}
-							height={20}
-						/>
-					</div>
+					<Image
+						src="/microphone.svg"
+						alt="microphone icon"
+						width={40}
+						height={20}
+					/>
+					<Image
+						src="/language-globe.svg"
+						alt="language globe icon"
+						width={20}
+						height={20}
+					/>
+				</div>
 			</div>
 		</nav>
 	);

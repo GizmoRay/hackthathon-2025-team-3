@@ -64,7 +64,7 @@ const Title: FC<TitleProps> = ({
 							height={168}
 							className={styles.hubImage}
 						/>
-						<h2>Copy Analyzer</h2>
+						<h2>ServiceNow Writing Buddy</h2>
 						<p>
 							Paste in draft copy and watch the magic. This tool highlights
 							grammar, style, and legal issues and links to info on corrections.
@@ -86,7 +86,7 @@ const Title: FC<TitleProps> = ({
 							height={168}
 							className={styles.hubImage}
 						/>
-						<h2>Style Guide Wizard</h2>
+						<h2>Brand Style Checker</h2>
 						<p>
 							Use this search bar style tool to ask a question or search for
 							answers on a specific style guide question.
