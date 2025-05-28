@@ -336,7 +336,7 @@ export default function CopyAnalyzer() {
 
 			<div className={styles.mainColumn}>
 				<Title
-					title="Copy Analyzer"
+					title="ServiceNow Writing Buddy"
 					description="Input your text in the box below. Errors in grammar, punctuation, brand voice, and more will appear with highlights. Click the suggestion links to learn more."
 				/>
 

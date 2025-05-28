@@ -59,7 +59,7 @@ async function waitForResult(
 	runId: string,
 	apiKey: string
 ): Promise<RegionalResponse> {
-	const maxAttempts = 10;
+	const maxAttempts = 20;
 	let attempts = 0;
 
 	while (attempts < maxAttempts) {
@@ -89,7 +89,24 @@ async function waitForResult(
 			if (data.status === "success" && data.data.status === "COMPLETE") {
 				const formatOutput = JSON.parse(data.data.output.format_output);
 				const originalText = data.data.input.copy;
-				const convertedText = formatOutput.regionalized_copy;
+				let convertedText = formatOutput.regionalized_copy;
+
+				// Handle case when convertedText is an object with 'en' property
+				if (typeof convertedText === "object" && convertedText !== null) {
+					console.log("convertedText is an object:", convertedText);
+
+					if (convertedText.en && typeof convertedText.en === "string") {
+						convertedText = convertedText.en;
+					} else {
+						// If 'en' property doesn't exist or isn't a string, stringify the object
+						convertedText = JSON.stringify(convertedText);
+					}
+				}
+
+				// Final safety check to ensure convertedText is a string
+				if (typeof convertedText !== "string") {
+					convertedText = String(convertedText || "");
+				}
 
 				return {
 					convertedText,

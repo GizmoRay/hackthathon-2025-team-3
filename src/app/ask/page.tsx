@@ -104,7 +104,7 @@ export default function AskPage() {
 
 			<div className={styles.mainColumn}>
 				<Title
-					title="Ask a Question"
+					title="Brand Style Checker"
 					description="Get answers to specific style questions."
 				/>
 

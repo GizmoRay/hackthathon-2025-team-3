@@ -12,7 +12,7 @@ export default function Home() {
 			/>*/}
 			<Title
 				type="hub"
-				title="Intelligent Style Guide Toolkit"
+				title="ServiceNow OneVoice Assist"
 				description="Get instant answers about ServiceNow style guidelines and best practices."
 			/>
 		</div>
