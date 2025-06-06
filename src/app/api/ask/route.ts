@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const encoder = new TextEncoder();
 
@@ -58,16 +58,21 @@ async function* streamResponse(text: string) {
 	}
 }
 
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
 	try {
-		const { message } = await request.json();
+		const { message, documentText } = await req.json();
 		const apiKey = process.env.COPY_AI_API_KEY || "";
 
 		if (!apiKey) {
 			throw new Error("API key not configured");
 		}
 
-		// Start the workflow
+		// Prepare the question with context if document text is available
+		const questionWithContext = documentText
+			? `Context from uploaded document: ${documentText}\n\nQuestion: ${message}`
+			: message;
+
+		// Start the workflow with the enhanced question if document is provided
 		const initResponse = await fetch(
 			"https://api.copy.ai/api/workflow/WCFG-5475d3a8-e5d7-4c96-92be-cb62bc2777af/run",
 			{
@@ -79,7 +84,7 @@ export async function POST(request: Request) {
 				},
 				body: JSON.stringify({
 					startVariables: {
-						question: message,
+						question: questionWithContext,
 					},
 				}),
 			}
@@ -106,27 +111,22 @@ export async function POST(request: Request) {
 			throw new Error("No answer received");
 		}
 
-		// Stream the response back to the client
-		const stream = new TransformStream();
-		const writer = stream.writable.getWriter();
-
-		(async () => {
-			try {
-				for await (const chunk of streamResponse(answer)) {
-					await writer.write(chunk);
+		// Stream the answer
+		const stream = new ReadableStream({
+			async start(controller) {
+				try {
+					for await (const chunk of streamResponse(answer)) {
+						controller.enqueue(chunk);
+					}
+					controller.close();
+				} catch (error) {
+					console.error("Error streaming response:", error);
+					controller.error(error);
 				}
-			} catch (error) {
-				console.error("Error streaming response:", error);
-			} finally {
-				writer.close();
-			}
-		})();
-
-		return new Response(stream.readable, {
-			headers: {
-				"Content-Type": "text/plain; charset=utf-8",
 			},
 		});
+
+		return new NextResponse(stream);
 	} catch (error) {
 		console.error("Error in ask endpoint:", error);
 		return NextResponse.json(

@@ -62,7 +62,7 @@
 
 .inputForm {
 	display: flex;
-	gap: 1rem;
+	gap: 10px;
 	padding: 1rem;
 	border-top: 1px solid #e0e0e0;
 }
@@ -93,6 +93,27 @@
 
 .sendButton:disabled {
 	background-color: #e0e0e0;
+	cursor: not-allowed;
+}
+
+.fileButton {
+	background-color: #f0f0f0;
+	border: none;
+	border-radius: 8px;
+	padding: 8px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s;
+}
+
+.fileButton:hover {
+	background-color: #e0e0e0;
+}
+
+.fileButton:disabled {
+	opacity: 0.5;
 	cursor: not-allowed;
 }
 

@@ -16,7 +16,10 @@ export default function AskPage() {
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [input, setInput] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [extractedText, setExtractedText] = useState<string | null>(null);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const scrollToBottom = () => {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -25,6 +28,53 @@ export default function AskPage() {
 	useEffect(() => {
 		scrollToBottom();
 	}, [messages]);
+
+	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		setSelectedFile(file);
+		const formData = new FormData();
+		formData.append("file", file);
+
+		try {
+			const response = await fetch("/api/extract-text", {
+				method: "POST",
+				body: formData,
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to extract text");
+			}
+
+			const data = await response.json();
+			setExtractedText(data.text);
+
+			// Add a system message to show that a file was processed
+			setMessages((prev) => [
+				...prev,
+				{
+					role: "assistant",
+					content: `File uploaded: ${file.name}\n\nText has been extracted. You can now ask questions about this document.`,
+					status: "complete",
+				},
+			]);
+		} catch (error) {
+			console.error("Error extracting text:", error);
+			setMessages((prev) => [
+				...prev,
+				{
+					role: "assistant",
+					content: `Error processing file: ${file.name}. Please try again with a different file.`,
+					status: "complete",
+				},
+			]);
+		}
+	};
+
+	const triggerFileUpload = () => {
+		fileInputRef.current?.click();
+	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -47,7 +97,10 @@ export default function AskPage() {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ message: userMessage }),
+				body: JSON.stringify({
+					message: userMessage,
+					documentText: extractedText || undefined,
+				}),
 			});
 
 			if (!response.ok || !response.body) {
@@ -99,6 +152,12 @@ export default function AskPage() {
 						<span className={styles.label}>Messages:</span>
 						<span className={styles.value}>{messages.length}</span>
 					</div>
+					{selectedFile && (
+						<div className={styles.statItem}>
+							<span className={styles.label}>Uploaded file:</span>
+							<span className={styles.value}>{selectedFile.name}</span>
+						</div>
+					)}
 				</div>
 			</Sidebar>
 
@@ -127,10 +186,35 @@ export default function AskPage() {
 					</div>
 
 					<form onSubmit={handleSubmit} className={styles.inputForm}>
+						<input
+							type="file"
+							ref={fileInputRef}
+							onChange={handleFileChange}
+							className={styles.fileInput}
+							accept=".doc,.docx,.pdf,.txt,.rtf,.ppt,.pptx,.xls,.xlsx"
+							style={{ display: "none" }}
+						/>
+						<button
+							type="button"
+							onClick={triggerFileUpload}
+							className={styles.fileButton}
+							disabled={isLoading}
+						>
+							<Image
+								src="/upload.svg"
+								width={21}
+								height={21}
+								alt="upload icon"
+							/>
+						</button>
 						<textarea
 							value={input}
 							onChange={(e) => setInput(e.target.value)}
-							placeholder="Ask about style guidelines..."
+							placeholder={
+								selectedFile
+									? `Ask about ${selectedFile.name}...`
+									: "Ask about style guidelines..."
+							}
 							className={styles.input}
 							onKeyDown={(e) => {
 								if (e.key === "Enter" && !e.shiftKey) {
