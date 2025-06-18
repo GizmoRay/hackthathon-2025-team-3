@@ -62,9 +62,13 @@
 
 .sideApps {
 	display: flex;
-	filter: opacity(50%);
 	gap: 10px;
 	margin-left: auto;
+	align-items: center;
+}
+
+.sideApps .microphoneIcon {
+	opacity: 0.4;
 }
 
 /* Dropdown container */
@@ -79,23 +83,21 @@
 	display: flex;
 	align-items: center;
 	gap: 5px;
-}
-
-/* Small caret icon */
-.caret {
-	font-size: 10px;
-	margin-left: 2px;
-	transition: transform 0.2s ease;
-}
-
-.dropdown .toolButton {
 	border: none;
 	color: white;
 	background-color: var(--arc-infinite-blue);
 }
 
-.dropdown .toolButton span {
-	background-color: transparent;
+/* Small caret icon */
+.caret {
+	display: inline-block;
+	transition: transform 0.2s ease;
+}
+
+.caretUp {
+	display: inline-block;
+	transform: rotate(180deg);
+	transition: transform 0.2s ease;
 }
 
 /* Dropdown content (hidden by default) */
@@ -110,16 +112,13 @@
 	border-radius: 6px;
 	z-index: 10;
 	margin-top: 10px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdownContent {
+/* Show the dropdown when the show class is applied */
+.dropdownContent.show {
 	display: block;
-}
-
-/* Rotate caret when dropdown is open */
-.dropdown:hover .caret {
-	transform: rotate(180deg);
+	animation: fadeIn 0.2s ease-in-out;
 }
 
 /* Dropdown item styling */
@@ -154,6 +153,89 @@
 	height: 12px;
 	background-color: var(--arc-infinite-blue);
 	transform: rotate(45deg);
+}
+
+/* Language dropdown styling */
+.languageDropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.languageButton {
+	display: flex;
+	align-items: center;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 5px;
+	border-radius: 4px;
+	color: white;
+	gap: 2px;
+}
+
+.languageButton:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.languageContent {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	background-color: var(--arc-infinite-blue);
+	min-width: 150px;
+	border-radius: 6px;
+	z-index: 10;
+	margin-top: 10px;
+	padding: 5px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.languageContent.show {
+	display: block;
+	animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.languageContent::before {
+	content: "";
+	position: absolute;
+	top: -6px;
+	right: 10px;
+	width: 12px;
+	height: 12px;
+	background-color: var(--arc-infinite-blue);
+	transform: rotate(45deg);
+}
+
+.languageItem {
+	display: block;
+	width: 100%;
+	text-align: left;
+	padding: 8px 12px;
+	color: white;
+	background: none;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.languageItem:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.languageItem.active {
+	font-weight: 500;
+	background-color: rgba(255, 255, 255, 0.15);
 }
 
 @media (max-width: 768px) {
