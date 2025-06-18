@@ -152,7 +152,7 @@ export default function AiMessagingAssistantPage() {
 			<div className={styles.sideColumn}>
 				<Sidebar type="stats">
 					<div className={styles.chatInfo}>
-						<h3>Chat History</h3>
+						<h3>Chat history</h3>
 						<div className={styles.statItem}>
 							<span className={styles.label}>Messages:</span>
 							<span className={styles.value}>{messages.length}</span>
@@ -167,13 +167,12 @@ export default function AiMessagingAssistantPage() {
 				</Sidebar>
 
 				<TrendingQuestions
-					title="Trending Questions"
+					title="Trending questions"
 					questions={[
-						"What’s the latest Bill McDermott said about AI?",
+						"What’s the latest that Bill McDermott has said about AI?",
 						"What’s our definition of ‘Workflow Data Fabric’?",
 						"How are we reframing CRM for the AI era?",
 						"How do we define ‘agentic AI’?",
-						"What evidence shows our CRM is disrupting legacy systems?",
 						"How do we describe ServiceNow’s AI control tower?",
 					]}
 					onFormSubmit={handleSubmit}

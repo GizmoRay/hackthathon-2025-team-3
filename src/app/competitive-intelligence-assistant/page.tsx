@@ -77,7 +77,10 @@ export default function CompetitiveIntelligenceAssistant() {
 		fileInputRef.current?.click();
 	};
 
-	const handleSubmit = async (e: React.FormEvent, trendingQuestion?: string) => {
+	const handleSubmit = async (
+		e: React.FormEvent,
+		trendingQuestion?: string
+	) => {
 		e.preventDefault();
 		const userMessage = trendingQuestion || input.trim();
 
@@ -149,7 +152,7 @@ export default function CompetitiveIntelligenceAssistant() {
 			<div className={styles.sideColumn}>
 				<Sidebar type="stats">
 					<div className={styles.chatInfo}>
-						<h3>Chat History</h3>
+						<h3>Chat history</h3>
 						<div className={styles.statItem}>
 							<span className={styles.label}>Messages:</span>
 							<span className={styles.value}>{messages.length}</span>
@@ -163,13 +166,22 @@ export default function CompetitiveIntelligenceAssistant() {
 					</div>
 				</Sidebar>
 
-				<TrendingQuestions title="Trending Questions" questions={['question 1', 'question 2', 'question 3']} onFormSubmit={handleSubmit}>
-				</TrendingQuestions>
+				<TrendingQuestions
+					title="Trending questions"
+					questions={[
+						"How does ServiceNow CRM compare to Salesforce CRM?",
+						"What evidence shows our CRM is disrupting legacy systems?",
+						"What is Salesforce Mulesoft?",
+						"How does ServiceNow AI compare to Salesforce Einstein?",
+						"Does Salesforce run on one platform?",
+					]}
+					onFormSubmit={handleSubmit}
+				></TrendingQuestions>
 			</div>
 
 			<div className={styles.mainColumn}>
 				<Title
-					title="Competitive Intelligence Assistant"
+					title="Competitive Intel Agent"
 					description="Ask questions about competitors and how they compare to ServiceNow."
 				/>
 

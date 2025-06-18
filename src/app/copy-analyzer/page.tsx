@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./styles.module.css";
 import Image from "next/image";
 import Title from "@/components/Title/Title";
@@ -22,16 +22,6 @@ interface Feedback {
 		issues: string[];
 	};
 	characterCount: number;
-}
-
-interface Highlight {
-	text: string;
-	type: "grammar" | "legal" | "brand" | "readability";
-	start: number;
-	end: number;
-}
-
-interface Feedback {
 	highlighted: {
 		issues: {
 			grammar_feedback?: string[];
@@ -40,6 +30,13 @@ interface Feedback {
 		};
 	};
 	suggestedRevisedCopy: string;
+}
+
+interface Highlight {
+	text: string;
+	type: "grammar" | "legal" | "brand" | "readability";
+	start: number;
+	end: number;
 }
 
 function extractHighlights(text: string, feedback: Feedback): Highlight[] {
@@ -202,18 +199,34 @@ function HighlightedTextarea({
 	onSubmit: (e: React.KeyboardEvent) => void;
 	isAnalyzing: boolean;
 }) {
+	const textareaRef = useRef<HTMLTextAreaElement>(null);
+	const highlightsRef = useRef<HTMLDivElement>(null);
+
+	// Sync scroll positions between textarea and highlights
+	const handleScroll = () => {
+		if (textareaRef.current && highlightsRef.current) {
+			highlightsRef.current.scrollTop = textareaRef.current.scrollTop;
+			highlightsRef.current.scrollLeft = textareaRef.current.scrollLeft;
+		}
+	};
+
 	return (
 		<div className={styles.textareaWrapper}>
-			<Image
+			{/* This is the text icon */}
+			{/* <Image
 				src="/Stars.svg"
 				alt="ai stars icon"
 				width={21}
 				height={21}
 				className={styles.aiIcon}
-			/>
+			/> */}
+
+			{/* Main text area for user input */}
 			<textarea
+				ref={textareaRef}
 				value={text}
 				onChange={(e) => onChange(e.target.value)}
+				onScroll={handleScroll}
 				placeholder="Paste your copy here..."
 				className={styles.textInput}
 				onKeyDown={(e) => {
@@ -222,13 +235,24 @@ function HighlightedTextarea({
 						onSubmit(e);
 					}
 				}}
+				style={{ display: "block", minHeight: "300px" }} // Force display
 			/>
-			<div className={styles.highlights}>
+
+			{/* Highlighted overlay */}
+			<div
+				ref={highlightsRef}
+				className={styles.highlights}
+				style={{ pointerEvents: "none" }} // Ensures clicks pass through to textarea
+			>
 				<HighlightedText text={text} highlights={highlights} />
 			</div>
+
+			{/* Spinner for loading state */}
 			<div
 				className={`${styles.spinner} ${isAnalyzing ? styles.visible : ""}`}
 			/>
+
+			{/* Voice button */}
 			<div
 				className={`${styles.voiceButton} ${
 					isAnalyzing ? styles.invisible : ""
@@ -251,6 +275,8 @@ export default function CopyAnalyzer() {
 	const [feedback, setFeedback] = useState<Feedback | null>(null);
 	const [highlights, setHighlights] = useState<Highlight[]>([]);
 	const [isAnalyzing, setIsAnalyzing] = useState(false);
+	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const analyzeCopy = async () => {
 		if (!text.trim()) return;
@@ -279,6 +305,59 @@ export default function CopyAnalyzer() {
 		}
 	};
 
+	const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+
+		setSelectedFile(file);
+		setIsAnalyzing(true);
+
+		try {
+			const formData = new FormData();
+			formData.append("file", file);
+
+			const response = await fetch("/api/extract-text", {
+				method: "POST",
+				body: formData,
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to extract text");
+			}
+
+			const data = await response.json();
+
+			if (data.text) {
+				// Set the extracted text in the editor
+				setText(data.text);
+
+				// Automatically analyze the extracted text
+				const analyzeResponse = await fetch("/api/analyze", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ text: data.text }),
+				});
+
+				if (!analyzeResponse.ok) {
+					throw new Error("Failed to analyze extracted text");
+				}
+
+				const analyzeData = await analyzeResponse.json();
+				setFeedback(analyzeData);
+			}
+		} catch (error) {
+			console.error("Error processing file:", error);
+		} finally {
+			setIsAnalyzing(false);
+		}
+	};
+
+	const triggerFileUpload = () => {
+		fileInputRef.current?.click();
+	};
+
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		analyzeCopy();
@@ -289,8 +368,6 @@ export default function CopyAnalyzer() {
 			setHighlights(extractHighlights(text, feedback));
 		}
 	}, [feedback, text]);
-
-	console.log("feedback", feedback);
 
 	return (
 		<div className={styles.container}>
@@ -313,6 +390,13 @@ export default function CopyAnalyzer() {
 				<div className={styles.characterStats}>
 					<h3>Characters</h3>
 					<div>{text.length} characters including spaces</div>
+
+					{selectedFile && (
+						<div className={styles.statItem}>
+							<h3>Uploaded file:</h3>
+							<div>{selectedFile.name}</div>
+						</div>
+					)}
 				</div>
 
 				{feedback && (
@@ -337,8 +421,8 @@ export default function CopyAnalyzer() {
 
 			<div className={styles.mainColumn}>
 				<Title
-					title="ServiceNow Writing Buddy"
-					description="Input your text in the box below. Errors in grammar, punctuation, brand voice, and more will appear with highlights."
+					title="ServiceNow Writing Coach"
+					description="Check your text or document. Errors in grammar, punctuation, brand voice, and more will appear with highlights."
 				/>
 
 				<div className={styles.editorContainer}>
@@ -350,6 +434,39 @@ export default function CopyAnalyzer() {
 							onSubmit={handleSubmit}
 							isAnalyzing={isAnalyzing}
 						/>
+						<div className={styles.buttonsContainer}>
+							<div className={styles.fileUploadContainer}>
+								<input
+									type="file"
+									ref={fileInputRef}
+									onChange={handleFileChange}
+									className={styles.fileInput}
+									accept=".doc,.docx,.pdf,.txt,.rtf,.ppt,.pptx,.xls,.xlsx"
+									style={{ display: "none" }}
+								/>
+								<button
+									type="button"
+									onClick={triggerFileUpload}
+									className={styles.uploadButton}
+									disabled={isAnalyzing}
+								>
+									<Image
+										src="/upload.svg"
+										width={21}
+										height={21}
+										alt="upload icon"
+									/>
+									<span>Upload Document</span>
+								</button>
+							</div>
+							<button
+								type="submit"
+								className={styles.analyzeButton}
+								disabled={isAnalyzing || !text.trim()}
+							>
+								{isAnalyzing ? "Analyzing..." : "Analyze"}
+							</button>
+						</div>
 					</form>
 				</div>
 				{feedback && feedback.suggestedRevisedCopy !== "" && (

@@ -14,9 +14,10 @@
 }
 
 .editorContainer {
-	display: flex;
-	flex-direction: column;
-	gap: 2rem;
+	display: block;
+	position: relative;
+	width: 100%;
+	margin: 20px 0;
 }
 
 .analyzerContainer {
@@ -81,28 +82,49 @@
 .textareaWrapper {
 	position: relative;
 	width: 100%;
-	min-height: 300px;
-	border: 1px solid #e0e0e0;
-	border-radius: 8px;
+	margin: 20px 0;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	min-height: 300px; /* Ensure minimum height */
+	display: block; /* Force display as block */
 	background: rgba(100%, 100%, 100%, 0.07);
 	backdrop-filter: blur(10px);
 }
 
 .textInput {
+	width: 100%;
+	min-height: 300px;
+	padding: 15px;
+	font-size: 16px;
+	line-height: 1.5;
+	border: none; /* Remove default border */
+	outline: none; /* Remove outline */
+	resize: vertical;
+	background-color: transparent;
+	position: relative;
+	z-index: 2;
+	display: block; /* Force display as block */
+	box-sizing: border-box;
+	color: white;
+	-ms-overflow-style: none; /* Internet Explorer 10+ */
+	scrollbar-width: none;
+}
+
+.highlights {
 	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
-	min-height: 300px;
-	padding: 3rem 1rem 1rem;
+	padding: 15px; /* Same padding as textarea */
 	font-size: 16px;
-	font-family: monospace;
-	border: none;
-	background: transparent;
+	line-height: 1.5; /* Same line height as textarea */
+	white-space: pre-wrap;
+	word-wrap: break-word;
 	color: transparent;
-	caret-color: white;
-	color: white;
-	resize: vertical;
-	z-index: 2;
+	pointer-events: none;
+	z-index: 1;
+	box-sizing: border-box;
 }
 
 .aiIcon {
@@ -158,20 +180,6 @@
 	position: absolute;
 	left: 0;
 	color: #666;
-}
-
-.highlights {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	padding: 3rem 1rem 1rem;
-	font-family: monospace;
-	font-size: 16px;
-	color: black;
-	pointer-events: none;
-	z-index: 1;
 }
 
 .highlights mark {
@@ -279,6 +287,69 @@
 	margin: 0 0 1rem 0;
 }
 
+.uploadButton {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background-color: #f5f5f5;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	padding: 8px 12px;
+	font-size: 14px;
+	cursor: pointer;
+	margin: 15px 0;
+	transition: background-color 0.2s;
+}
+
+.uploadButton:hover {
+	background-color: #e8e8e8;
+}
+
+.uploadButton:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.fileName {
+	font-size: 14px;
+	color: #555;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 200px;
+}
+
+.analyzeButton {
+	display: block;
+	margin: 15px 0;
+	padding: 10px 16px;
+	background-color: var(--arc-infinite-blue);
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.analyzeButton:hover {
+	background-color: var(--arc-brand-green-900);
+}
+
+.analyzeButton:disabled {
+	background-color: #cccccc;
+	cursor: not-allowed;
+}
+
+.buttonsContainer {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+	margin: 15px 0;
+}
+
 @keyframes spin {
 	to {
 		transform: rotate(360deg);
@@ -370,4 +441,25 @@
 	.recommendationsColumn {
 		grid-area: recommendations;
 	}
+}
+
+/* Ensure proper coloring of different highlight types */
+.grammar {
+	background-color: rgba(255, 0, 0, 0.2); /* Light red */
+	border-bottom: 2px solid red;
+}
+
+.legal {
+	background-color: rgba(255, 165, 0, 0.2); /* Light orange */
+	border-bottom: 2px solid orange;
+}
+
+.brand {
+	background-color: rgba(0, 0, 255, 0.2); /* Light blue */
+	border-bottom: 2px solid blue;
+}
+
+.readability {
+	background-color: rgba(0, 128, 0, 0.2); /* Light green */
+	border-bottom: 2px solid green;
 }

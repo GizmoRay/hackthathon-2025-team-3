@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const encoder = new TextEncoder();
 
 async function waitForResult(runId: string, apiKey: string): Promise<string> {
-	const maxAttempts = 10;
+	const maxAttempts = 30;
 	let attempts = 0;
 
 	while (attempts < maxAttempts) {
@@ -40,7 +40,7 @@ async function waitForResult(runId: string, apiKey: string): Promise<string> {
 		}
 
 		attempts++;
-		await new Promise((resolve) => setTimeout(resolve, 2000));
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 	}
 
 	throw new Error("Timeout waiting for result");

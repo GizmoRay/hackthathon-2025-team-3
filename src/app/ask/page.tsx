@@ -152,7 +152,7 @@ export default function AskPage() {
 			<div className={styles.sideColumn}>
 				<Sidebar type="stats">
 					<div className={styles.chatInfo}>
-						<h3>Chat History</h3>
+						<h3>Chat history</h3>
 						<div className={styles.statItem}>
 							<span className={styles.label}>Messages:</span>
 							<span className={styles.value}>{messages.length}</span>
@@ -167,7 +167,7 @@ export default function AskPage() {
 				</Sidebar>
 
 				<TrendingQuestions
-					title="Trending Questions"
+					title="Trending questions"
 					questions={[
 						"Do we capitalize AI Agents?",
 						"Do we use serial commas?",
@@ -183,7 +183,7 @@ export default function AskPage() {
 
 			<div className={styles.mainColumn}>
 				<Title
-					title="Brand Style Checker"
+					title="Brand Style Buddy"
 					description="Get answers to specific style questions."
 				/>
 

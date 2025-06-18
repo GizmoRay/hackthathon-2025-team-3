@@ -58,8 +58,8 @@ export async function POST(request: Request) {
 		await new Promise((resolve) => setTimeout(resolve, 2000));
 
 		let attempts = 0;
-		const maxAttempts = 10;
-		const delay = 5000;
+		const maxAttempts = 30;
+		const delay = 1000;
 
 		while (attempts < maxAttempts) {
 			const resultsResponse = await fetch(

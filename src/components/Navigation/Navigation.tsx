@@ -63,7 +63,7 @@ const Navigation: FC = () => {
 							pathname === "/copy-analyzer" ? styles.active : ""
 						}`}
 					>
-						<span>ServiceNow Writing Buddy</span>
+						<span>ServiceNow Writing Coach</span>
 					</Link>
 					<div className={styles.dropdown} ref={assistantsDropdownRef}>
 						<button
@@ -97,7 +97,7 @@ const Navigation: FC = () => {
 								}`}
 								onClick={() => setAssistantsDropdownOpen(false)}
 							>
-								Brand Style Checker
+								Brand Style Buddy
 							</Link>
 							<Link
 								href="/ai-messaging-assistant"
@@ -117,7 +117,7 @@ const Navigation: FC = () => {
 								}`}
 								onClick={() => setAssistantsDropdownOpen(false)}
 							>
-								Competitive Intelligence Assistant
+								Competitive Intel Agent
 							</Link>
 						</div>
 					</div>

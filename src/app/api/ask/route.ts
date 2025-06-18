@@ -40,7 +40,7 @@ async function waitForResult(runId: string, apiKey: string): Promise<string> {
 		}
 
 		attempts++;
-		await new Promise((resolve) => setTimeout(resolve, 2000));
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 	}
 
 	throw new Error("Timeout waiting for result");
