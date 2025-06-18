@@ -5,7 +5,6 @@
 	padding: 2rem;
 	max-width: 1400px;
 	margin: 0 auto;
-	background: white;
 }
 
 .mainColumn {
@@ -39,6 +38,7 @@
 	font-size: 1.2rem;
 	font-weight: 500;
 	margin: 0;
+	color: white;
 }
 
 .score {
@@ -97,7 +97,8 @@
 	border: none;
 	background: transparent;
 	color: transparent;
-	caret-color: black;
+	caret-color: white;
+	color: white;
 	resize: vertical;
 	z-index: 2;
 }

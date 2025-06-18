@@ -1,7 +1,7 @@
 .nav {
 	padding: 1rem 2rem;
-	border-bottom: 1px solid #e5e5e5;
-	background: white;
+	color: white;
+	background: var(--arc-infinite-blue);
 }
 
 .container {
@@ -25,6 +25,7 @@
 	flex-direction: row;
 	gap: 0.5rem;
 	align-items: center;
+	margin-bottom: 4px;
 }
 
 .logo {
@@ -35,19 +36,28 @@
 .navLinks {
 	display: inline-flex;
 	gap: 20px;
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 21px;
 }
 
 .toolButton {
 	box-sizing: border-box;
 	padding-bottom: 22px;
 	margin-bottom: -22px;
+	border-bottom: 4px solid transparent;
 }
 
 .toolButton.active {
-	background: linear-gradient(white, white) padding-box,
+	/* background: linear-gradient(
+				var(--arc-infinite-blue),
+				var(--arc-infinite-blue)
+			)
+			padding-box,
 		linear-gradient(90deg, #62d84e 0%, #24c2ce 80%) border-box;
-	border-bottom: 4px solid transparent;
+	border-bottom: 4px solid transparent; */
 	/* margin-bottom: -4px; */
+	border-bottom: 4px solid var(--arc-brand-green-900);
 }
 
 .sideApps {

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const encoder = new TextEncoder();
 
 async function waitForResult(runId: string, apiKey: string): Promise<string> {
-	const maxAttempts = 10;
+	const maxAttempts = 40;
 	let attempts = 0;
 
 	while (attempts < maxAttempts) {

@@ -1,10 +1,11 @@
 :root {
 	--background: #ffffff;
 	--foreground: #171717;
-	--arc-brand-green-900: #1a610e;
+	--arc-brand-green-900: #62d84e;
 	--arc-brand-green-100: #e0f7dc;
 	--arc-red: #f8e4e6;
 	--arc-blue: #d7eff1;
+	--arc-infinite-blue: #032d42;
 	--arc-yellow: #f9f2cb;
 	--arc-violet: #dee3f8;
 	--arc-red-rgb: 244, 67, 54;
@@ -27,7 +28,8 @@ body {
 
 body {
 	color: var(--foreground);
-	background: var(--background);
+	background: url("/background.png") var(--arc-infinite-blue) 50% / cover
+		no-repeat;
 	font-family: Arial, Helvetica, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

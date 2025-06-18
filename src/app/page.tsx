@@ -12,7 +12,12 @@ export default function Home() {
 			/>*/}
 			<Title
 				type="hub"
-				title="ServiceNow OneVoice Assist"
+				title={
+					<div>
+						<span style={{ color: "#62D84E" }}>ServiceNow </span>
+						<span>OneVoice Assist</span>
+					</div>
+				}
 				description="Get instant answers about ServiceNow style guidelines and best practices."
 			/>
 		</div>

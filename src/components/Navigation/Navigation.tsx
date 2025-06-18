@@ -43,12 +43,12 @@ const Navigation: FC = () => {
 					</Link>
 
 					<Link
-						href="/regional"
+						href="/ai-messaging-assistant"
 						className={`${styles.toolButton} ${
-							pathname === "/regional" ? styles.active : ""
+							pathname === "/ai-messaging-assistant" ? styles.active : ""
 						}`}
 					>
-						<span>Regional Experience</span>
+						<span>Assistant</span>
 					</Link>
 				</nav>
 				<div className={styles.sideApps}>
