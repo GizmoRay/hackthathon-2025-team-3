@@ -84,6 +84,8 @@
 	min-height: 300px;
 	border: 1px solid #e0e0e0;
 	border-radius: 8px;
+	background: rgba(100%, 100%, 100%, 0.07);
+	backdrop-filter: blur(10px);
 }
 
 .textInput {

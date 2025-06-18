@@ -42,14 +42,47 @@ const Navigation: FC = () => {
 						<span>Brand Style Checker</span>
 					</Link>
 
-					<Link
-						href="/ai-messaging-assistant"
-						className={`${styles.toolButton} ${
-							pathname === "/ai-messaging-assistant" ? styles.active : ""
-						}`}
-					>
-						<span>Assistant</span>
-					</Link>
+					<div className={styles.dropdown}>
+						<button className={styles.toolButton}>
+							<span>Assistants</span>
+							<span className={styles.caret}>
+								<Image
+									src="/caret-down.svg"
+									alt="caret down icon"
+									width={16}
+									height={16}
+								/>
+							</span>
+						</button>
+						<div className={styles.dropdownContent}>
+							<Link
+								href="/ask"
+								className={`${styles.dropdownItem} ${
+									pathname === "/ask" ? styles.active : ""
+								}`}
+							>
+								Brand Style Checker
+							</Link>
+							<Link
+								href="/ai-messaging-assistant"
+								className={`${styles.dropdownItem} ${
+									pathname === "/ai-messaging-assistant" ? styles.active : ""
+								}`}
+							>
+								AI Messaging Assistant
+							</Link>
+							<Link
+								href="/competitive-intelligence-assistant"
+								className={`${styles.dropdownItem} ${
+									pathname === "/competitive-intelligence-assistant"
+										? styles.active
+										: ""
+								}`}
+							>
+								Competitive Intelligence Assistant
+							</Link>
+						</div>
+					</div>
 				</nav>
 				<div className={styles.sideApps}>
 					<Image
