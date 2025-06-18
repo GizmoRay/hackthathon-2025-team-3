@@ -92,6 +92,7 @@ const Title: FC<TitleProps> = ({ title = "", description, type }) => {
 								controls
 								autoPlay
 								style={{ borderRadius: 8, display: "block" }}
+								onEnded={() => setIsModalOpen(false)}
 							>
 								<source src="/customer-research.mp4" type="video/mp4" />
 								Your browser does not support the video tag.
