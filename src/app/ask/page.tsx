@@ -77,7 +77,10 @@ export default function AskPage() {
 		fileInputRef.current?.click();
 	};
 
-	const handleSubmit = async (e: React.FormEvent, trendingQuestion?: string) => {
+	const handleSubmit = async (
+		e: React.FormEvent,
+		trendingQuestion?: string
+	) => {
 		e.preventDefault();
 		const userMessage = trendingQuestion || input.trim();
 
@@ -163,8 +166,19 @@ export default function AskPage() {
 					</div>
 				</Sidebar>
 
-				<TrendingQuestions title="Trending Questions" questions={['question 1', 'question 2', 'question 3']} onFormSubmit={handleSubmit}>
-				</TrendingQuestions>
+				<TrendingQuestions
+					title="Trending Questions"
+					questions={[
+						"Do we capitalize AI Agents?",
+						"Do we use serial commas?",
+						"Are ampersands okay to use?",
+						"Can we use acronyms in headlines?",
+						"Is it eBook or Ebook?",
+						"Are trademarks capitalized?",
+						"Do we use punctuation in headlines?",
+					]}
+					onFormSubmit={handleSubmit}
+				></TrendingQuestions>
 			</div>
 
 			<div className={styles.mainColumn}>
