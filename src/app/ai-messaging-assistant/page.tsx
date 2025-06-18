@@ -77,7 +77,10 @@ export default function AiMessagingAssistantPage() {
 		fileInputRef.current?.click();
 	};
 
-	const handleSubmit = async (e: React.FormEvent, trendingQuestion?: string) => {
+	const handleSubmit = async (
+		e: React.FormEvent,
+		trendingQuestion?: string
+	) => {
 		e.preventDefault();
 		const userMessage = trendingQuestion || input.trim();
 
@@ -163,8 +166,18 @@ export default function AiMessagingAssistantPage() {
 					</div>
 				</Sidebar>
 
-				<TrendingQuestions title="Trending Questions" questions={['question 1', 'question 2', 'question 3']} onFormSubmit={handleSubmit}>
-				</TrendingQuestions>
+				<TrendingQuestions
+					title="Trending Questions"
+					questions={[
+						"What’s the latest Bill McDermott said about AI?",
+						"What’s our definition of ‘Workflow Data Fabric’?",
+						"How are we reframing CRM for the AI era?",
+						"How do we define ‘agentic AI’?",
+						"What evidence shows our CRM is disrupting legacy systems?",
+						"How do we describe ServiceNow’s AI control tower?",
+					]}
+					onFormSubmit={handleSubmit}
+				></TrendingQuestions>
 			</div>
 
 			<div className={styles.mainColumn}>
