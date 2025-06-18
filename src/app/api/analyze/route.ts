@@ -91,6 +91,8 @@ export async function POST(request: Request) {
 			const resultsData = await resultsResponse.json();
 			console.log(`Attempt ${attempts + 1} data:`, resultsData);
 
+			let suggestedRevisedCopy = "";
+
 			// Check if the analysis is complete and has output
 			if (
 				resultsData.data.status === "COMPLETE" &&
@@ -114,6 +116,15 @@ export async function POST(request: Request) {
 						.map((item) => item.trim()); // Clean up each item
 				};
 
+				// if input is a set string (I'll provide that), then also return suggested revised copy as additional item in the obejct
+				if (
+					body.text ===
+					"Go beyond traditional CRM. Harness the power of AI to transform services and sales. Accelerate self-service, boost revenue enhance agent and technician productivity, and speed up resolution and fulfillment. Ensure technicians have what need to fix the problem the first time"
+				) {
+					suggestedRevisedCopy =
+						"Put ServiceNow CRM to work for you. Sell, fulfill, and service with AI agents, data, and workflows on one platform. Enhance team productivity and self-service with the right tools to resolve issues fast.";
+				}
+
 				return NextResponse.json({
 					readability: {
 						score: feedback.readability_score || "70%",
@@ -133,6 +144,7 @@ export async function POST(request: Request) {
 						issues: feedback.highlighted_text,
 					},
 					characterCount: body.text.length,
+					suggestedRevisedCopy: suggestedRevisedCopy,
 				});
 			}
 

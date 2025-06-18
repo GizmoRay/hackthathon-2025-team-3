@@ -39,6 +39,7 @@ interface Feedback {
 			brand_voice_feedback?: string[];
 		};
 	};
+	suggestedRevisedCopy: string;
 }
 
 function extractHighlights(text: string, feedback: Feedback): Highlight[] {
@@ -337,7 +338,7 @@ export default function CopyAnalyzer() {
 			<div className={styles.mainColumn}>
 				<Title
 					title="ServiceNow Writing Buddy"
-					description="Input your text in the box below. Errors in grammar, punctuation, brand voice, and more will appear with highlights. Click the suggestion links to learn more."
+					description="Input your text in the box below. Errors in grammar, punctuation, brand voice, and more will appear with highlights."
 				/>
 
 				<div className={styles.editorContainer}>
@@ -351,6 +352,24 @@ export default function CopyAnalyzer() {
 						/>
 					</form>
 				</div>
+				{feedback && feedback.suggestedRevisedCopy !== "" && (
+					<div className={styles.revisedCopyContainer}>
+						<h3>Writing web copy? Consider this revised version:</h3>
+						{feedback && (
+							<div className={styles.revisedCopy}>
+								<q>
+									<HighlightedText
+										text={feedback.suggestedRevisedCopy}
+										highlights={extractHighlights(
+											feedback.suggestedRevisedCopy,
+											feedback
+										)}
+									/>
+								</q>
+							</div>
+						)}
+					</div>
+				)}
 			</div>
 			{feedback && (
 				<Sidebar type="list" className={styles.recommendationsColumn}>

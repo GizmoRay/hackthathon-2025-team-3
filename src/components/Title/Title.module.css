@@ -26,6 +26,35 @@
 	font-weight: 500;
 }
 
+.painPointsContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	margin: 40px auto 40px auto;
+	padding: 1rem;
+	color: var(--arc-infinite-blue);
+	border-radius: 20px;
+	background: rgba(100%, 100%, 100%, 0.07);
+	backdrop-filter: blur(10px);
+	max-width: 60%;
+}
+
+.painPointsContainer .outlineButton {
+	color: white;
+}
+
+.closeButton {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	background-color: transparent;
+	border: none;
+	color: white;
+	font-size: 24px;
+	cursor: pointer;
+}
+
 .toolButton {
 	padding: 0.75rem 1.5rem;
 	background: linear-gradient(white, white) padding-box,
@@ -149,5 +178,10 @@
 	.hubItem > img {
 		width: 100%;
 		height: auto;
+	}
+
+	.outlineButton {
+		width: 100%;
+		font-size: 0.75rem;
 	}
 }

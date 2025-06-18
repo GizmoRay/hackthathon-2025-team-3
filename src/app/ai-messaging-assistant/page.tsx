@@ -164,7 +164,7 @@ export default function AiMessagingAssistantPage() {
 			<div className={styles.mainColumn}>
 				<Title
 					title="AI Messaging Assistant"
-					description="Find the latest messaging and P5 leadership quotes about AI."
+					description="Find the latest brand messaging and P5 leadership quotes about AI."
 				/>
 
 				<div className={styles.chatContainer}>
