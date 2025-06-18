@@ -1,11 +1,5 @@
 import { NextResponse } from "next/server";
 
-// Add this debug section at the top
-console.log("Available env vars:", {
-	COPY_AI_API_KEY: process.env.COPY_AI_API_KEY,
-	NODE_ENV: process.env.NODE_ENV,
-});
-
 // Add this helper function before the POST handler
 const getReadabilityStatus = (score: string) => {
 	const numericScore = parseInt(score.replace("%", ""));
