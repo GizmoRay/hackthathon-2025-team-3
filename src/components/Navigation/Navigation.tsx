@@ -33,15 +33,6 @@ const Navigation: FC = () => {
 						<span>ServiceNow Writing Buddy</span>
 					</Link>
 
-					<Link
-						href="/ask"
-						className={`${styles.toolButton} ${
-							pathname === "/ask" ? styles.active : ""
-						}`}
-					>
-						<span>Brand Style Checker</span>
-					</Link>
-
 					<div className={styles.dropdown}>
 						<button className={styles.toolButton}>
 							<span>Assistants</span>

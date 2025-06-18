@@ -18,7 +18,7 @@ export default function Home() {
 						<span>OneVoice Assist</span>
 					</div>
 				}
-				description="Get instant answers about ServiceNow style guidelines and best practices."
+				description="Get instant answers about ServiceNow style guidelines, AI messaging, and competitive intelligence."
 			/>
 		</div>
 	);

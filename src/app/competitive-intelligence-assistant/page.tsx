@@ -164,7 +164,7 @@ export default function CompetitiveIntelligenceAssistant() {
 			<div className={styles.mainColumn}>
 				<Title
 					title="Competitive Intelligence Assistant"
-					description="Get answers to specific questions regarding guidelines."
+					description="Ask questions about competitors and how they compare to ServiceNow."
 				/>
 
 				<div className={styles.chatContainer}>

@@ -33,8 +33,8 @@ const Title: FC<TitleProps> = ({ title = "", description, type }) => {
 							className={styles.hubImage}
 						/>
 						<p>
-							Paste in draft copy and watch the magic. This tool highlights
-							grammar, style, and legal issues and links to info on corrections.
+							Find grammar, style, and legal issues in your copy with links to
+							guidelines.
 						</p>
 						<Link
 							href="/copy-analyzer"
@@ -53,10 +53,7 @@ const Title: FC<TitleProps> = ({ title = "", description, type }) => {
 							height={168}
 							className={styles.hubImage}
 						/>
-						<p>
-							Use this search bar style tool to ask a question or search for
-							answers on a specific style guide question.
-						</p>
+						<p>Search for answers on specific style guide questions.</p>
 						<Link
 							href="/ask"
 							className={`${styles.solidButton} ${
@@ -74,10 +71,7 @@ const Title: FC<TitleProps> = ({ title = "", description, type }) => {
 							height={168}
 							className={styles.hubImage}
 						/>
-						<p>
-							Description vestibulum ante ipsum primis in faucibus orci luctus
-							et ultrices posuere cubilia curae.
-						</p>
+						<p>Find the latest messaging and P5 leadership quotes about AI.</p>
 						<Link
 							href="/ai-messaging-assistant"
 							className={`${styles.solidButton} ${
@@ -96,8 +90,8 @@ const Title: FC<TitleProps> = ({ title = "", description, type }) => {
 							className={styles.hubImage}
 						/>
 						<p>
-							Description vestibulum ante ipsum primis in faucibus orci luctus
-							et ultrices posuere cubilia curae.
+							Ask questions about competitors and see how they compare to
+							ServiceNow.
 						</p>
 						<Link
 							href="/competitive-intelligence-assistant"
