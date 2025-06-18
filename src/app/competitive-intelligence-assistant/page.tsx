@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import styles from "./styles.module.css";
 import Title from "@/components/Title/Title";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import TrendingQuestions from "@/components/TrendingQuestions/TrendingQuestions";
 import Image from "next/image";
 
 interface Message {
@@ -76,11 +77,11 @@ export default function CompetitiveIntelligenceAssistant() {
 		fileInputRef.current?.click();
 	};
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent, trendingQuestion?: string) => {
 		e.preventDefault();
-		if (!input.trim() || isLoading) return;
+		const userMessage = trendingQuestion || input.trim();
 
-		const userMessage = input.trim();
+		if (!userMessage || isLoading) return;
 		setInput("");
 		setIsLoading(true);
 
@@ -145,21 +146,26 @@ export default function CompetitiveIntelligenceAssistant() {
 
 	return (
 		<div className={styles.container}>
-			<Sidebar type="stats">
-				<div className={styles.chatInfo}>
-					<h3>Chat History</h3>
-					<div className={styles.statItem}>
-						<span className={styles.label}>Messages:</span>
-						<span className={styles.value}>{messages.length}</span>
-					</div>
-					{selectedFile && (
+			<div className={styles.sideColumn}>
+				<Sidebar type="stats">
+					<div className={styles.chatInfo}>
+						<h3>Chat History</h3>
 						<div className={styles.statItem}>
-							<span className={styles.label}>Uploaded file:</span>
-							<span className={styles.value}>{selectedFile.name}</span>
+							<span className={styles.label}>Messages:</span>
+							<span className={styles.value}>{messages.length}</span>
 						</div>
-					)}
-				</div>
-			</Sidebar>
+						{selectedFile && (
+							<div className={styles.statItem}>
+								<span className={styles.label}>Uploaded file:</span>
+								<span className={styles.value}>{selectedFile.name}</span>
+							</div>
+						)}
+					</div>
+				</Sidebar>
+
+				<TrendingQuestions title="Trending Questions" questions={['question 1', 'question 2', 'question 3']} onFormSubmit={handleSubmit}>
+				</TrendingQuestions>
+			</div>
 
 			<div className={styles.mainColumn}>
 				<Title
