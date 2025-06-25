@@ -164,7 +164,7 @@ const Title: FC<TitleProps> = ({ title = "", description, type }) => {
 					</div>
 					<div className={styles.hubItem}>
 						<Image
-							src="/agent.png"
+							src="/agent.jpg"
 							alt="ServiceNow Intelligent Style Guide"
 							width={299}
 							height={168}
